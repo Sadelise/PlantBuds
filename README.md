@@ -7,4 +7,14 @@ Yleisiä linkkejä:
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Pokemon-kanta.html) 
+Järjestelmän tarkoitus on tarjota käyttäjälle tietoa erilaisista kasveista ja niiden hoidosta. Käyttäjät voivat lisätä yleisiä kuvauksia kasveista ja myös pitää kirjaa omista kasveistaan ja niiden hoidosta ja kehityksestä. 
+
+
+Toimintoja:
+
+    Kasvien tietojen lisääminen, muokkaus ja poisto
+    Kasvien hakeminen eri hakukriteereillä
+    Käyttäjän rekisteröityminen
+    Ylläpitäjän ja käyttäjän kirjautuminen
+    Kasvin lisääminen omiin kasveihin
+    Omien kasvien tietojen muuttaminen ja poistaminen
