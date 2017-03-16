@@ -2,8 +2,8 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://www.cs.helsinki.fi)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki sovellukseeni](https://sharhio.users.cs.helsinki.fi/PlantBuds)
+* [Linkki dokumentaatiooni](https://github.com/Sadelise/PlantBuds/blob/master/doc/Dokumentaatio.pdf)
 
 ## Työn aihe
 
