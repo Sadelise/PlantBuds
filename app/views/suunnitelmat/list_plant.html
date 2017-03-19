@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Käyttäjän kasvit</h1>
+
+<p>
+    <a href="#" class="btn btn-success">Lisää kasvi</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Nimi</th>
+            <th>Latinankielinen nimi</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- Listataan kasvit tähän -->
+        <tr>
+            <td><a href="#">Jukkapalmu</a></td>
+            <td>Yucca elephantipes</td>
+            <th><a class="btn btn-default btn-sm" href="#">Tarkastele</a></th>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+

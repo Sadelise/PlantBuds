@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Muokkaa kasvia Jukkapalmu</h1>
+
+<form>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox">
+            Kuollut
+        </label>
+    </div>
+    <div class="form-group">
+        <label>Nimi</label>
+        <input class="form-control" value="Jukkapalmu" type="text">
+    </div>
+    <div class="form-group">
+        <label>Hankintapäivä</label>
+        <input class="form-control" value="19.03.2017" type="text">
+    </div>
+    <div class="form-group">
+        <label>Latinankielinen nimi</label>
+        <input class="form-control" value="Yucca elephantipes" type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Sijainti</label>
+        <select>
+            <option>Eteläikkuna</option>
+            <option>Pohjoisikkuna </option>
+            <option>Länsi-ikkuna</option>
+            <option>Itäikkuna</option>
+        </select>  
+    </div>
+    <div class="form-group">
+        <label>Etäisyys ikkunasta</label>
+        <select>
+            <option><=0.50 m</option>
+            <option><=1.00 m </option>
+            <option><=1.50 m</option>
+            <option><=2.00 m</option>
+            <option>>2.00 m</option>
+        </select>  
+    </div>
+    <div class="form-group">
+        <label>Kastelu</label>
+        <select>
+            <option>Kerran päivässä</option>
+            <option>Joka toinen päivä</option>
+            <option>Kerran viikossa</option>
+            <option>Joka toinen viikko</option>
+            <option>Kerran kuussa</option>
+        </select>  
+    </div>
+    <div class="form-group">
+        <label>Lannoitus</label>
+        <select>
+            <option>Kerran viikossa</option>
+            <option>Joka toinen viikko</option>
+            <option>Kerran kuukaudessa</option>
+            <option>Kerran kahdessa kuukaudessa</option>
+            <option>Harvemmin</option>
+        </select>  
+    </div>
+    <div class="form-group">
+        <label>Kasvualusta</label>
+        <select>
+            <option>Kaupallinen multa</option>
+            <option>Oma sekoitus</option>
+        </select>  
+    </div>
+    <div class="form-group">
+        <label>Mullan merkki tai mikä sekoitus</label>
+        <input class="form-control" value="Kekkilä" type="text">
+    </div>
+    <div class="form-group">
+        <label>Lisätiedot</label>
+        <textarea class="form-control">      Paras kasvi.
+        </textarea>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+</form>
+{% endblock %}
