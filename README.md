@@ -14,6 +14,9 @@ Linkit eri sivuille:
 * [Kasvikuvauksen editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_p)
 * [Omien kasvien listaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_o)
 * [Kasvikuvausten listaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_p)
+* [Lista tiettyä kasvia koskevista päiväkirjamerkinnöistä](https://sharhio.users.cs.helsinki.fi/PlantBuds/diarylist)
+* [Päiväkirjamerkintä](https://sharhio.users.cs.helsinki.fi/PlantBuds/diarypost)
+* [Päiväkirjamerkinnän muokkaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_diary)
 * [Kirjautumissivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/login)
 
 ## Työn aihe

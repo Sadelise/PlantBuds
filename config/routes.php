@@ -39,3 +39,12 @@ $routes->get('/edit_o', function() {
 $routes->get('/care', function() {
     HelloWorldController::caredescription();
 });
+$routes->get('/diarylist', function() {
+    HelloWorldController::diarylist();
+});
+$routes->get('/diarypost', function() {
+    HelloWorldController::diarypost();
+});
+$routes->get('/edit_diary', function() {
+    HelloWorldController::edit_diary();
+});

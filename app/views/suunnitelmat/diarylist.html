@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Päiväkirjamerkinnät koskien kasvia: Jukkapalmu</h1>
+
+<p>
+    <a href="#" class="btn btn-success">Lisää uusi</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Otsikko</th>
+            <th>Lisäyspäivä</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- Listataan kasvit tähän -->
+        <tr>
+            <td><a href="#diarypost">Jukkapalmu kasvaa!</a></td>
+            <td>25.03.2017</td>
+            <th><a class="btn btn-default btn-sm" href="/PlantBuds/edit_diary">Muokkaa</a></th>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+
