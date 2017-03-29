@@ -3,15 +3,15 @@
 <h1>Käyttäjän kasvit</h1>
 
 <p>
-    <a href="/PlantBuds/edit_o" class="btn btn-success">Lisää kasvi</a>
+    <a href="{{base_path}}/addOwnPlant/{{plant.grower_id}}" class="btn btn-success">Lisää kasvi</a>
 </p>
 
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Nimi</th>
-            <th>Hankintapäivä</th>
             <th>Latinankielinen nimi</th>
+            <th>Hankintapäivä</th>
             <th>Status</th>
             <th>Lisäyspäivä</th>
             <th></th>
@@ -19,16 +19,21 @@
     </thead>
 
     <tbody>
-        <!-- Listataan kasvit tähän -->
+        {% for plant in plants %}
         <tr>
-            <td><a href="/PlantBuds/care">Jukkapalmu</a></td>
-            <td><2005</td>
-            <td>Yucca elephantipes</td>
-            <td><label class="label label-danger">elossa</label></td>
-            <td>19.03.2017</td>
-            <th><a class="btn btn-default btn-sm" href="/PlantBuds/edit_o">Muokkaa</a></th>   
-            <th><a class="btn btn-default btn-sm" href="/PlantBuds/diarylist">Päiväkirjamerkinnät</a></th>
+            <td><a href="{{base_path}}/care/{{plant.id}}">{{plant.tradename}}</a></td>
+            <td>{{plant.latin_name}}</td>
+            <td>{{plant.acquisition}}</td>
+            {% if plant.status == 'elossa' %}
+            <td><label class="label label-success">elossa</label></td>
+            {% else %}
+            <td><label class="label label-danger">kuollut</label></td>
+            {% endif %}
+            <td>{{plant.added}}</td>
+            <th><a class="btn btn-default btn-sm" href="{{base_path}}/edit_o">Muokkaa</a></th>   
+            <th><a class="btn btn-default btn-sm" href="{{base_path}}/diarylist/{{plant.id}}">Päiväkirjamerkinnät</a></th>
         </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

@@ -19,4 +19,4 @@ INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, dis
 
 CREATE VIEW OP_id AS (SELECT id FROM Owned_Plant WHERE plant_id = (SELECT * FROM Jukan_id) LIMIT 1);
 
-INSERT INTO Diary (grower_id, owned_id, posted, post) VALUES ((SELECT * FROM Kasvattajan_id),(SELECT * FROM OP_id), NOW(), 'Kasvi kasvanut sentin eilisestä.');
+INSERT INTO Diary (grower_id, owned_id, title, posted, post) VALUES ((SELECT * FROM Kasvattajan_id),(SELECT * FROM OP_id), 'Kasvi kasvaa!', NOW(), 'Kasvi kasvanut sentin eilisestä.');

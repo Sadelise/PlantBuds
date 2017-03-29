@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Jukkapalmu</h1>
+<h1>{{plant.tradename}}</h1>
 <!-- Painikkeet tähän -->
 <p>
     <button class="btn btn-danger">Poista</button> <a href="/PlantBuds/edit_o" class="btn btn-default">Muokkaa</a>
 </p>
 <!-- Tiedot tulee listana tähän -->
 <ul>
-    <li><strong>Nimi:</strong> Jukkapalmu</li>
-    <li><strong>Hankintapäivä:</strong> <2005</li>
-    <li><strong>Latinankielinen nimi:</strong> Yucca elephantipes</li>
+    <li><strong>Nimi:</strong> {{plant.tradename}}</li>
+    <li><strong>Hankintapäivä:</strong> {{plant.acquisition}}</li>
+    <li><strong>Latinankielinen nimi:</strong> {{plant.latin_name}}</li>
     <li><strong>Status:</strong> <label class="label label-danger">elossa</label></li>
-    <li><strong>Sijainti:</strong> eteläikkuna</li>
-    <li><strong>Etäisyys ikkunasta:</strong> <0.5 m</li>
-    <li><strong>Kastelu:</strong> kerran viikossa</li>
-    <li><strong>Lannoitus:</strong> kerran kuukaudessa</li>
-    <li><strong>Kasvualusta:</strong> Kaupallinen multa</li>
-    <li><strong>Mullan merkki tai mikä sekoitus:</strong> Kekkilä</li>
+    <li><strong>Sijainti:</strong> {{plant.location}}</li>
+    <li><strong>Etäisyys ikkunasta:</strong> {{plant.distance_window}}</li>
+    <li><strong>Kastelu:</strong> {{plant.watering}}</li>
+    <li><strong>Lannoitus:</strong> {{plant.fertilizing}}</li>
+    <li><strong>Kasvualusta:</strong> {{plant.soil}}</li>
+    <li><strong>Mullan merkki tai mikä sekoitus:</strong> {{plant.soil_description}}</li>
 </ul>
 <!-- Kuvaus tulee tähän -->
 <p>
-    Paras kasvi.
+   {{plant.details}}
 </p>
 {% endblock %}

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Jukkapalmu kasvaa!</h1>
-<h2>25.03.2017</h2>
-<!-- Painikkeet tähän -->
+<h1>{{diary.title}}</h1>
+<h2>{{diary.posted}}</h2>
 
-<!-- Kuvaus tulee tähän -->
 <p>
-    Uusi lehti!
+    {{diary.post}}
 </p>
 
 <p>

@@ -39,7 +39,8 @@ CREATE TABLE Diary(
   id SERIAL PRIMARY KEY,
   grower_id INTEGER REFERENCES Grower(id),
   owned_id INTEGER REFERENCES Owned_Plant(id),
-  posted timestamp NOT NULL,
+  title varchar(50),
+  posted DATE NOT NULL,
   post text NOT NULL 
 );
 

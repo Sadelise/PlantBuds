@@ -50,5 +50,39 @@ class Plant extends BaseModel {
 
         return null;
     }
+    public static function findByName($tradename) {
+        $query = DB::connection()->prepare('SELECT * FROM Plant WHERE tradename = :tradename LIMIT 1');
+        $query->execute(array('tradename' => $tradename));
+        $row = $query->fetch();
 
-}
+        if ($row) {
+            $plant = new Plant(array(
+                'id' => $row['id'],
+                'tradename' => $row['tradename'],
+                'latin_name' => $row['latin_name'],
+                'light' => $row['light'],
+                'water' => $row['water'],
+                'description' => $row['description'],
+                'edited' => $row['edited']
+            ));
+
+            return $plant;
+        }
+
+        return null;
+    }
+
+    public function save() {
+            $query = DB::connection()->prepare('INSERT INTO Plant (tradename, latin_name, light, water, description, edited) VALUES (:tradename, :latin_name, :light, :water, :description, NOW()) RETURNING id');
+            $query->execute(array('tradename' => $this->tradename,
+                'latin_name' => $this->latin_name,
+                'water' => $this->water,
+                'light' => $this->light,
+                'description' => $this->description
+            ));
+            $row = $query->fetch();
+            $this->id = $row['id'];
+        }
+    }
+
+
