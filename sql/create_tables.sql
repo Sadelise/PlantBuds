@@ -7,12 +7,7 @@ CREATE TABLE Grower(
 CREATE TABLE Plant(
   id SERIAL PRIMARY KEY,
   tradename varchar NOT NULL,
-  latin_name varchar
-);
-
-CREATE TABLE Plant_Description(
-  id SERIAL PRIMARY KEY,
-  plant_id INTEGER REFERENCES Plant(id),
+  latin_name varchar,
   light varchar,
   water varchar,
   description varchar,
@@ -21,7 +16,7 @@ CREATE TABLE Plant_Description(
 
 CREATE TABLE Writer(
   grower_id INTEGER REFERENCES Grower(id),
-  description_id INTEGER REFERENCES Plant_Description(id)
+  plant_id INTEGER REFERENCES Plant(id)
 );
 
 CREATE TABLE Owned_Plant(

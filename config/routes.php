@@ -12,13 +12,13 @@ $routes->get('/login', function() {
     HelloWorldController::login();
 });
 
-$routes->get('/description', function() {
-    HelloWorldController::plantdescription();
-});
+//$routes->get('/description', function() {
+//    HelloWorldController::plantdescription();
+//});
 
-$routes->get('/list_p', function() {
-    HelloWorldController::list_plant();
-});
+//$routes->get('/list_p', function() {
+//    HelloWorldController::list_plant();
+//});
 
 $routes->get('/list_o', function() {
     HelloWorldController::list_ownplant();
@@ -47,4 +47,10 @@ $routes->get('/diarypost', function() {
 });
 $routes->get('/edit_diary', function() {
     HelloWorldController::edit_diary();
+});
+$routes->get('/list_p', function() {
+    PlantController::index();
+});
+$routes->get('/description/:id', function($id) {
+    PlantController::show($id);
 });

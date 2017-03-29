@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Jukkapalmu</h1>
-  <!-- Painikkeet tähän -->
+
+  <h1>{{plant.tradename}}</h1>
   <p>
-    <button class="btn btn-danger">Poista</button> <a href="/PlantBuds/edit_p" class="btn btn-default">Muokkaa</a>
+    <button class="btn btn-danger">Poista</button> <a href="{{base_path}}/edit_p" class="btn btn-default">Muokkaa</a>
   </p>
   <!-- Tiedot tulee listana tähän -->
+
   <ul>
-    <li><strong>Latinankielinen nimi:</strong> Yucca elephantipes</li>
-    <li><strong>Muokattu viimeksi:</strong> 19.03.2017</li>
+    <li><strong>Latinankielinen nimi:</strong> {{plant.latin_name}}</li>
+    <li><strong>Muokattu viimeksi:</strong> {{plant.edited}}</li>
     
-    <li><strong>Kasteluntarve:</strong> vähäinen</li>
-    <li><strong>Valo:</strong> Suosii voimakasta valoa</li>
+    <li><strong>Kastelun tarve:</strong>{{plant.water}}</li>
+    <li><strong>Valo:</strong>{{plant.light}}</li>
   </ul>
   <!-- Kuvaus tulee tähän -->
   <p>
-Jukkapalmu, kiiltojukka tai yuccapalmu (Yucca elephantipes, syn. Yucca guatemalensis) on eteläamerikkalainen nahkealehtinen kasvi, jota käytetään paljon huonekasvina. 
+{{plant.description}}
   </p>
+ 
 {% endblock %}

@@ -3,7 +3,7 @@
 <h1>Kaikki kasvit</h1>
 
 <p>
-    <a href="/PlantBuds/edit_p" class="btn btn-success">Lisää kasvi</a>
+    <a href="{{base_path}}/PlantBuds/edit_p" class="btn btn-success">Lisää kasvi</a>
 </p>
 
 <table class="table table-striped table-bordered">
@@ -16,11 +16,12 @@
     </thead>
 
     <tbody>
-        <!-- Listataan kasvit tähän -->
+        {% for plant in plants %}
         <tr>
-            <td><a href="/PlantBuds/description">Jukkapalmu</a></td>
-            <td>Yucca elephantipes</td>
+            <td><a href="{{base_path}}/description/{{plant.id}}">{{plant.tradename}}</a></td>
+            <td>{{plant.latin_name}}</td>
         </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
