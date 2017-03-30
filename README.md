@@ -11,7 +11,7 @@ Linkit eri sivuille:
 * [Yksittäisen omistetun kasvin sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/care/1)
 * [Omistetun kasvin editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_o)
 * [Kasvikuvauksen sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/description/1)
-* [Kasvikuvauksen editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_p/)
+* [Kasvikuvauksen editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_p/1)
 * [Omien kasvien listaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_o)
 * [Kasvikuvausten listaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_p)
 * [Lista tiettyä kasvia koskevista päiväkirjamerkinnöistä](https://sharhio.users.cs.helsinki.fi/PlantBuds/diarylist/1)
