@@ -36,12 +36,20 @@ $routes->post('/description/new', function() {
     PlantController::store();
 });
 
+$routes->post('/description/:id/destroy', function($id) {
+    PlantController::destroy($id);
+});
+
 $routes->get('/description/:id', function($id) {
     PlantController::show($id);
 });
 
 $routes->get('/edit_p/:id', function($id) {
     PlantController::edit($id);
+});
+
+$routes->post('/edit_p/:id', function($id) {
+    PlantController::update($id);
 });
 
 $routes->get('/list_o', function() {
@@ -75,3 +83,4 @@ $routes->get('/addOwnPlant/:id', function($id) {
 //$routes->post('/newOwnPlant', function() {
 //    OwnPlantController::store();
 //});
+

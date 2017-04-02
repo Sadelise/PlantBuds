@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Muokkaa kasvia {{plant.tradename}}</h1>
 
-<form method="post" action="{{base_path}}/description/edit">
+<form method="post" action="{{base_path}}/edit_p/{{plant.id}}">
     <div class="form-group">
         <label>Nimi</label>
         <input name="tradename" class="form-control" value='{{plant.tradename}}' type="text">

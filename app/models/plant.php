@@ -86,6 +86,24 @@ class Plant extends BaseModel {
         $this->id = $row['id'];
     }
 
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE Plant SET tradename = :tradename, latin_name = :latin_name, light = :light, water = :water, description = :description, edited = NOW() WHERE id = :id');
+        $query->execute(array('tradename' => $this->tradename,
+        'latin_name' => $this->latin_name,
+        'water' => $this->water,
+        'light' => $this->light,
+        'description' => $this->description,
+        'id' => $this->id
+        ));
+    }
+
+       public function destroy() {
+        $query = DB::connection()->prepare('DELETE FROM Plant WHERE id = :id');
+        $query->execute(array(
+        'id' => $this->id
+        ));
+    }
+    
     public function validate_tradename() {
         $errors = array();
         if ($this->tradename == '' || $this->tradename == null) {

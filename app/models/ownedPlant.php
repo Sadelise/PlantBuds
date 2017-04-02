@@ -85,5 +85,29 @@ class OwnedPlant extends BaseModel {
         $row = $query->fetch();
         $this->id = $row['id'];
     }
+    
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE Owned_Plant SET grower_id = :grower_id, plant_id = :plant_id, acquisition = :acquisition, status = :status, location = :location, distance_window = :distance_window, soil = :soil, soil_description = :soil_description, watering = :watering, fertilizing = :fertilizing, details = :details, added = NOW() WHERE id = :id');
+        $query->execute(array( 'id' => $this->id,
+            'grower_id' => $this->grower_id,
+            'plant_id' => $this->plant_id,
+            'acquisition' => $this->acquisition,
+            'status' => $this->status,
+            'location' => $this->location,
+            'distance_window' => $this->distance_window,
+            'soil' => $this->soil,
+            'soil_description' => $this->soil_description,
+            'watering' => $this->watering,
+            'fertilizing' => $this->fertilizing,
+            'details' => $this->details,
+            'added' => $this->added
+        ));
+    }
 
+       public function destroy() {
+        $query = DB::connection()->prepare('DELETE FROM Owned_Plant WHERE id = :id');
+        $query->execute(array(
+        'id' => $this->id
+        ));
+    }
 }

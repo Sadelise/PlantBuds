@@ -42,4 +42,35 @@ class PlantController extends BaseController {
         }
     }
 
+    public static function update($id) {
+        $params = $_POST;
+
+        $attributes = array(
+            'id' => $id,
+            'tradename' => $params['tradename'],
+            'latin_name' => $params['latin_name'],
+            'light' => $params['light'],
+            'water' => $params['water'],
+            'description' => $params['description']
+        );
+
+        $plant = new Plant($attributes);
+        $errors = $plant->errors();
+
+        if (count($errors) > 0) {
+            View::make('suunnitelmat/edit_plant.html', array('errors' => $errors, 'attributes' => $attributes));
+        } else {
+            $plant->update();
+
+            Redirect::to('/description/' . $plant->id, array('message' => 'Kasvia on muokattu onnistuneesti!'));
+        }
+    }
+
+    public static function destroy($id) {
+        $plant = new Plant(array('id' => $id));
+        $plant->destroy();
+
+        Redirect::to('/list_p', array('message' => 'Kasvi on poistettu onnistuneesti!'));
+    }
+
 }
