@@ -8,14 +8,14 @@ Yleisiä linkkejä:
 Linkit eri sivuille:
 
 
-* [Yksittäisen omistetun kasvin sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/care)
+* [Yksittäisen omistetun kasvin sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/care/1)
 * [Omistetun kasvin editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_o)
-* [Kasvikuvauksen sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/description)
-* [Kasvikuvauksen editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_p)
+* [Kasvikuvauksen sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/description/1)
+* [Kasvikuvauksen editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_p/1)
 * [Omien kasvien listaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_o)
 * [Kasvikuvausten listaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_p)
-* [Lista tiettyä kasvia koskevista päiväkirjamerkinnöistä](https://sharhio.users.cs.helsinki.fi/PlantBuds/diarylist)
-* [Päiväkirjamerkintä](https://sharhio.users.cs.helsinki.fi/PlantBuds/diarypost)
+* [Lista tiettyä kasvia koskevista päiväkirjamerkinnöistä](https://sharhio.users.cs.helsinki.fi/PlantBuds/diarylist/1)
+* [Päiväkirjamerkintä](https://sharhio.users.cs.helsinki.fi/PlantBuds/diarypost/1)
 * [Päiväkirjamerkinnän muokkaus](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_diary)
 * [Kirjautumissivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/login)
 
