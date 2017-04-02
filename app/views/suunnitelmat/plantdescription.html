@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
+  <h1>{{plant.tradename}}</h1>
+  <p>
+   {{forms.destroy_button("#{base_path}}/description/{#plant.id}/destroy")}}<a href="{{base_path}}/edit_p/{{plant.id}}" class="btn btn-default">Muokkaa</a>
+  </p>
+  <!-- Tiedot tulee listana tähän -->
 
-<h1>{{plant.tradename}}</h1>
-<p>
-<form method="post" action="{{base_path}}/description/{{plant.id}}/destroy" style="display: inline-block;">
-    <button type="submit" class="btn btn-danger">Poista</button><a href="{{base_path}}/edit_p/{{plant.id}}" class="btn btn-default">Muokkaa</a>
-</p>
-<!-- Tiedot tulee listana tähän -->
-
-<ul>
+  <ul>
     <li><strong>Latinankielinen nimi:</strong> {{plant.latin_name}}</li>
     <li><strong>Muokattu viimeksi:</strong> {{plant.edited}}</li>
-
+    
     <li><strong>Kastelun tarve:</strong>{{plant.water}}</li>
     <li><strong>Valo:</strong>{{plant.light}}</li>
-</ul>
-<!-- Kuvaus tulee tähän -->
-<p>
-    {{plant.description}}
-</p>
-
+  </ul>
+  <!-- Kuvaus tulee tähän -->
+  <p>
+{{plant.description}}
+  </p>
+ 
 {% endblock %}

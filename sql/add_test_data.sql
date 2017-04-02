@@ -1,5 +1,6 @@
 INSERT INTO Grower (username, password) VALUES ('Tiina', '1234');
 INSERT INTO Grower (username, password) VALUES ('Pertti', '5678');
+INSERT INTO Grower (username, password) VALUES ('Vieras', '1234');
 
 INSERT INTO Plant (tradename, latin_name, light, water, description, edited) VALUES ('Jukkapalmu', 'Yucca elephantipes','Paljon', 'vähäinen', 'Ei lainkaan palmu, vaan parsa.', NOW());
 INSERT INTO Plant (tradename, latin_name, light, water, description, edited) VALUES ('Liekkipuu', 'Delonix regia','Paljon', 'Kauden mukaan', 'Kotoisin Madagaskarilta', NOW());

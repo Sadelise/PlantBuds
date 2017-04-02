@@ -8,10 +8,6 @@ $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
 });
 
-$routes->get('/login', function() {
-    HelloWorldController::login();
-});
-
 $routes->get('/frontpage', function() {
     HelloWorldController::frontpage();
 });
@@ -76,11 +72,20 @@ $routes->get('/diarypost/:id', function($id) {
 //    DiaryController::store();
 //});
 
-$routes->get('/addOwnPlant/:id', function($id) {
-    OwnPlantController::newPlant($id);
+$routes->get('/addOwnPlant', function() {
+    OwnPlantController::newPlant();
 });
 
 //$routes->post('/newOwnPlant', function() {
 //    OwnPlantController::store();
 //});
 
+$routes->get('/login', function(){
+  // Kirjautumislomakkeen esittäminen
+  UserController::login();
+});
+
+$routes->post('/login', function(){
+  // Kirjautumisen käsittely
+  UserController::handle_login();
+});

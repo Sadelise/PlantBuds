@@ -9,13 +9,13 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id');
-        $query->execute();
+        $query = DB::connection()->prepare('SELECT * FROM Owned_Plant LEFT JOIN Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id');
+        $query->execute(array('grower_id' => $_SESSION['user']));
         $rows = $query->fetchAll();
         $plant = array();
 
         foreach ($rows as $row) {
-            $plant[] = new ownedPlant(array(
+            $plant[] = new OwnedPlant(array(
                 'id' => $row['id'],
                 'tradename' => $row['tradename'],
                 'latin_name' => $row['latin_name'],
@@ -30,7 +30,8 @@ class OwnedPlant extends BaseModel {
                 'watering' => $row['edited'],
                 'fertilizing' => $row['fertilizing'],
                 'details' => $row['details'],
-                'added' => $row['added']
+                'added' => $row['added'],
+                'grower_id' => $_SESSION['id']
             ));
         }
 
@@ -38,8 +39,9 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function find($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE id = :id LIMIT 1');
-        $query->execute(array('id' => $id));
+        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE id = :id LIMIT 1 AND Owned_Plant.grower_id = :grower_id');
+        $query->execute(array('id' => $id,
+            'grower_id' => $_SESSION['user']));
         $row = $query->fetch();
 
         if ($row) {
@@ -69,8 +71,7 @@ class OwnedPlant extends BaseModel {
 
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES (:grower_id, :plant_id, :acquisition, :status, :location, :distance_window, :soil, :soil_description, :watering, :fertilizing, :details, NOW()) RETURNING id');
-        $query->execute(array('grower_id' => $this->grower_id,
-            'plant_id' => $this->plant_id,
+        $query->execute(array('plant_id' => $this->plant_id,
             'acquisition' => $this->acquisition,
             'status' => $this->status,
             'location' => $this->location,
@@ -80,16 +81,16 @@ class OwnedPlant extends BaseModel {
             'watering' => $this->watering,
             'fertilizing' => $this->fertilizing,
             'details' => $this->details,
-            'added' => $this->added
+            'added' => $this->added,
+            'grower_id' => $_SESSION['user']
         ));
         $row = $query->fetch();
         $this->id = $row['id'];
     }
-    
+
     public function update() {
         $query = DB::connection()->prepare('UPDATE Owned_Plant SET grower_id = :grower_id, plant_id = :plant_id, acquisition = :acquisition, status = :status, location = :location, distance_window = :distance_window, soil = :soil, soil_description = :soil_description, watering = :watering, fertilizing = :fertilizing, details = :details, added = NOW() WHERE id = :id');
-        $query->execute(array( 'id' => $this->id,
-            'grower_id' => $this->grower_id,
+        $query->execute(array('id' => $this->id,
             'plant_id' => $this->plant_id,
             'acquisition' => $this->acquisition,
             'status' => $this->status,
@@ -100,14 +101,16 @@ class OwnedPlant extends BaseModel {
             'watering' => $this->watering,
             'fertilizing' => $this->fertilizing,
             'details' => $this->details,
-            'added' => $this->added
+            'added' => $this->added,
+            'grower_id' => $_SESSION['user']
         ));
     }
 
-       public function destroy() {
+    public function destroy() {
         $query = DB::connection()->prepare('DELETE FROM Owned_Plant WHERE id = :id');
         $query->execute(array(
-        'id' => $this->id
+            'id' => $this->id
         ));
     }
+
 }
