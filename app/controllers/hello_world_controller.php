@@ -13,11 +13,18 @@ class HelloWorldController extends BaseController {
 //      echo 'Hello World!';
 //        View::make('helloworld.html');
 
-        $jukkapalmu = Plant::find(1);
-        $plants = Plant::all();
-        // Kint-luokan dump-metodi tulostaa muuttujan arvon
-        Kint::dump($plants);
-        Kint::dump($jukkapalmu);
+
+        $doom = new Plant(array(
+            'tradename' => 'd',
+            'latin_name' => 'jotain',
+            'light' => '',
+            'water' => '',
+            'description' => '',
+            'edited' => ''
+        ));
+        $errors = $doom->errors();
+
+        Kint::dump($errors);
     }
 
     public static function edit_ownplant() {

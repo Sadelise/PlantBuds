@@ -51,9 +51,11 @@ $routes->get('/list_o', function() {
 $routes->get('/care/:id', function($id) {
     OwnPlantController::show($id);
 });
+
 $routes->get('/addDiary/:tradename', function($tradename) {
     DiaryController::newDiary($tradename);
 });
+
 $routes->get('/diarylist/:id', function($id) {
     DiaryController::index($id);
 });

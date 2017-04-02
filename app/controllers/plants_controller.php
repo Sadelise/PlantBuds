@@ -23,16 +23,23 @@ class PlantController extends BaseController {
 
     public static function store() {
         $params = $_POST;
-        $plant = new Plant(array(
+        $attributes = array(
             'tradename' => $params['tradename'],
             'latin_name' => $params['latin_name'],
             'light' => $params['light'],
             'water' => $params['water'],
             'description' => $params['description']
-        ));
+        );
 
-        $plant->save();
-        Redirect::to('/description/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
+        $plant = new Plant($attributes);
+        $errors = $plant->errors();
+
+        if (count($errors) == 0) {
+            $plant->save();
+            Redirect::to('/description/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
+        } else {
+            View::make('suunnitelmat/addPlant.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
     }
 
 }

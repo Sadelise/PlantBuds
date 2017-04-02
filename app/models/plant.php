@@ -6,6 +6,7 @@ class Plant extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_tradename');
     }
 
     public static function all() {
@@ -50,6 +51,7 @@ class Plant extends BaseModel {
 
         return null;
     }
+
     public static function findByName($tradename) {
         $query = DB::connection()->prepare('SELECT * FROM Plant WHERE tradename = :tradename LIMIT 1');
         $query->execute(array('tradename' => $tradename));
@@ -73,16 +75,27 @@ class Plant extends BaseModel {
     }
 
     public function save() {
-            $query = DB::connection()->prepare('INSERT INTO Plant (tradename, latin_name, light, water, description, edited) VALUES (:tradename, :latin_name, :light, :water, :description, NOW()) RETURNING id');
-            $query->execute(array('tradename' => $this->tradename,
-                'latin_name' => $this->latin_name,
-                'water' => $this->water,
-                'light' => $this->light,
-                'description' => $this->description
-            ));
-            $row = $query->fetch();
-            $this->id = $row['id'];
-        }
+        $query = DB::connection()->prepare('INSERT INTO Plant (tradename, latin_name, light, water, description, edited) VALUES (:tradename, :latin_name, :light, :water, :description, NOW()) RETURNING id');
+        $query->execute(array('tradename' => $this->tradename,
+            'latin_name' => $this->latin_name,
+            'water' => $this->water,
+            'light' => $this->light,
+            'description' => $this->description
+        ));
+        $row = $query->fetch();
+        $this->id = $row['id'];
     }
 
+    public function validate_tradename() {
+        $errors = array();
+        if ($this->tradename == '' || $this->tradename == null) {
+            $errors[] = 'Nimi ei saa olla tyhjä!';
+        }
+        if (strlen($this->tradename) < 3) {
+            $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
+        }
 
+        return $errors;
+    }
+
+}
