@@ -2,13 +2,17 @@
 {% block content %}
 <h1>Lisää uusi kasvi omaan kokoelmaasi</h1>
 
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
 <form method="post" action="{{base_path}}/newOwnPlant">
-    <div class="checkbox">
-        <label>
-            <input name="status" type="checkbox">
-            Kuollut
-        </label>
-    </div>
     <div class="form-group">
         <label>Nimi</label>
         <input name="tradename" class="form-control" value="" type="text">
@@ -21,28 +25,34 @@
         <label>Hankintapäivä</label>
         <input name="acquisition" class="form-control" value="" type="text">
     </div>
-    <div name="location" class="form-group">
+    <div class="form-group">
         <label>Sijainti</label>
-        <select>
+        <select name="location">
             <option>Eteläikkuna</option>
             <option>Pohjoisikkuna </option>
             <option>Länsi-ikkuna</option>
             <option>Itäikkuna</option>
         </select>  
     </div>
-    <div name="distance_window" class="form-group">
-        <label>Etäisyys ikkunasta</label>
-        <select>
-            <option><=0.50 m</option>
-            <option><=1.00 m </option>
-            <option><=1.50 m</option>
-            <option><=2.00 m</option>
-            <option>>2.00 m</option>
+    <div class="form-group">
+        <label>Etäisyysarvio ikkunasta metreinä</label>
+        <select name="distance_window">
+            <option>0.0</option>
+            <option>0.5</option>
+            <option>1.0</option>
+            <option>1.5</option>
+            <option>2.0</option>
+            <option>2.5</option>
+            <option>3.0</option>
+            <option>3.5</option>
+            <option>4.0</option>
+            <option>4.5</option>
+            <option>5.0</option>
         </select>  
     </div>
-    <div name="watering" class="form-group">
+    <div class="form-group">
         <label>Kastelu</label>
-        <select>
+        <select name="watering">
             <option>Kerran päivässä</option>
             <option>Joka toinen päivä</option>
             <option>Kerran viikossa</option>
@@ -50,9 +60,9 @@
             <option>Kerran kuussa</option>
         </select>  
     </div>
-    <div name="fertilizing" class="form-group">
+    <div class="form-group">
         <label>Lannoitus</label>
-        <select>
+        <select name="fertilizing">
             <option>Kerran viikossa</option>
             <option>Joka toinen viikko</option>
             <option>Kerran kuukaudessa</option>
@@ -60,9 +70,9 @@
             <option>Harvemmin</option>
         </select>  
     </div>
-    <div name="soil" class="form-group">
+    <div class="form-group">
         <label>Kasvualusta</label>
-        <select>
+        <select name="soil">
             <option>Kaupallinen multa</option>
             <option>Oma sekoitus</option>
         </select>  
@@ -74,10 +84,7 @@
     <div class="form-group">
         <label>Lisätiedot</label>
         <textarea name="details" class="form-control">
-        </textarea>
-    </div>
-
-    <div class="form-group">
+        </textarea></div><div class="form-group">
         <button type="submit" class="btn btn-primary">Tallenna</button>
     </div>
 </form>

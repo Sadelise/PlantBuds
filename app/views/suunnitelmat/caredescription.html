@@ -10,7 +10,13 @@
     <li><strong>Nimi:</strong> {{plant.tradename}}</li>
     <li><strong>Hankintapäivä:</strong> {{plant.acquisition}}</li>
     <li><strong>Latinankielinen nimi:</strong> {{plant.latin_name}}</li>
-    <li><strong>Status:</strong> <label class="label label-danger">elossa</label></li>
+    <li><strong>Status:</strong> 
+        {% if plant.status == 'elossa' %}
+        <label class="label label-success">elossa</label>
+        {% else %}
+        <label class="label label-danger">kuollut</label>
+        {% endif %}
+    </li>
     <li><strong>Sijainti:</strong> {{plant.location}}</li>
     <li><strong>Etäisyys ikkunasta:</strong> {{plant.distance_window}}</li>
     <li><strong>Kastelu:</strong> {{plant.watering}}</li>
@@ -20,6 +26,6 @@
 </ul>
 <!-- Kuvaus tulee tähän -->
 <p>
-   {{plant.details}}
+    {{plant.details}}
 </p>
 {% endblock %}

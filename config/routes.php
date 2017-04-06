@@ -76,16 +76,16 @@ $routes->get('/addOwnPlant', function() {
     OwnPlantController::newPlant();
 });
 
-//$routes->post('/newOwnPlant', function() {
-//    OwnPlantController::store();
-//});
-
-$routes->get('/login', function(){
-  // Kirjautumislomakkeen esittäminen
-  UserController::login();
+$routes->post('/newOwnPlant', function() {
+    OwnPlantController::store();
 });
 
-$routes->post('/login', function(){
-  // Kirjautumisen käsittely
-  UserController::handle_login();
+$routes->get('/login', function() {
+    // Kirjautumislomakkeen esittäminen
+    UserController::login();
+});
+
+$routes->post('/login', function() {
+    // Kirjautumisen käsittely
+    UserController::handle_login();
 });

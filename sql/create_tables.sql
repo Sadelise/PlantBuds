@@ -21,8 +21,8 @@ CREATE TABLE Writer(
 
 CREATE TABLE Owned_Plant(
   id SERIAL PRIMARY KEY,
-  grower_id INTEGER REFERENCES Grower(id), 
-  plant_id INTEGER REFERENCES Plant(id),
+  grower_id INTEGER REFERENCES Grower(id) NOT NULL, 
+  plant_id INTEGER REFERENCES Plant(id) NOT NULL,
   acquisition date,
   status varchar NOT NULL,
   location varchar NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE Owned_Plant(
   watering varchar NOT NULL,
   fertilizing varchar NOT NULL,
   details varchar NOT NULL,
-  added DATE NOT NULL
+  added DATE
 );
 
 CREATE TABLE Diary(

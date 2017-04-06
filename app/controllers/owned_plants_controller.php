@@ -7,44 +7,45 @@ class OwnPlantController extends BaseController {
         View::make('suunnitelmat/list_ownplant.html', array('plants' => $plants));
     }
 
-//ei vielä muokattu
     public static function show($id) {
-        $plant = Plant::find($id);
+        $plant = OwnedPlant::find($id);
         View::make('suunnitelmat/caredescription.html', array('plant' => $plant));
     }
 
     public static function edit($id) {
-        $plant = Plant::find($id);
+        $plant = OwnedPlant::find($id);
         View::make('suunnitelmat/edit_ownplant.html', array('plant' => $plant));
     }
 
-    public static function newPlant($id) {
-        $info = array('id' => $id);
-        View::make('suunnitelmat/addOwnPlant.html', array('info' => $info));
+    public static function newPlant() {
+        View::make('suunnitelmat/addOwnPlant.html');
     }
 
     public static function store() {
         $params = $_POST;
-        $plant = new Plant(array(
+        $attributes = array(
             'tradename' => $params['tradename'],
             'latin_name' => $params['latin_name'],
-            'grower_id' => $params['grower_id'],
-            'plant_id' => $params['plant_id'],
             'acquisition' => $params['acquisition'],
-            'status' => $params['status'],
             'location' => $params['location'],
             'distance_window' => $params['distance_window'],
             'soil' => $params['soil'],
             'soil_description' => $params['soil_description'],
-            'watering' => $params['edited'],
+            'watering' => $params['watering'],
             'fertilizing' => $params['fertilizing'],
-            'details' => $params['details'],
-            'added' => $params['added']
-        ));
+            'details' => $params['details']
+        );
+        $plant = new OwnedPlant($attributes);
+        $errors = $plant->errors();
 
-        $plant->save();
-        Redirect::to('/care/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
+        if (count($errors) == 0) {
+            $plant->save();
+            Redirect::to('/care/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
+        } else {
+            View::make('suunnitelmat/addOwnPlant.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
     }
+
     public static function update($id) {
         $params = $_POST;
 
@@ -65,7 +66,7 @@ class OwnPlantController extends BaseController {
             'added' => $params['added']
         );
 
-        $plant = new ownedPlant($attributes);
+        $plant = new OwnedPlant($attributes);
         $errors = $plant->errors();
 
         if (count($errors) > 0) {
@@ -78,9 +79,10 @@ class OwnPlantController extends BaseController {
     }
 
     public static function destroy($id) {
-        $plant = new ownedPlant(array('id' => $id));
+        $plant = new OwnedPlant(array('id' => $id));
         $plant->destroy();
 
         Redirect::to('/list_o', array('message' => 'Kasvi on poistettu onnistuneesti!'));
     }
+
 }

@@ -23,9 +23,23 @@ class BaseModel {
         foreach ($this->validators as $validator) {
             // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
             $metodin_nimi = $validator;
-            $errors = array_merge($errors, $this->{$metodin_nimi}());
+            $errors = array_merge($errors, $this->{$metodin_nimi
+                    }());
         }
 
         return $errors;
     }
+
+    public function validate_string_length($string, $length) {
+        $errors = array();
+        if ($string == '' || $string == null) {
+            $errors[] = 'Kenttä ei saa olla tyhjä!';
+        }
+        if (strlen($string) < $length) {
+            $errors[] = 'Pituuden tulee olla vähintään ' . $length . ' merkkiä!';
+        }
+
+        return $errors;
+    }
+
 }

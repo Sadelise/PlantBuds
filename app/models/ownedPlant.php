@@ -6,6 +6,7 @@ class OwnedPlant extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_tradename', 'validate_acuisition_date');
     }
 
     public static function all() {
@@ -31,7 +32,7 @@ class OwnedPlant extends BaseModel {
                 'fertilizing' => $row['fertilizing'],
                 'details' => $row['details'],
                 'added' => $row['added'],
-                'grower_id' => $_SESSION['id']
+                'grower_id' => $_SESSION['user']
             ));
         }
 
@@ -39,8 +40,8 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function find($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE id = :id LIMIT 1 AND Owned_Plant.grower_id = :grower_id');
-        $query->execute(array('id' => $id,
+        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.id = :owned_id AND Owned_Plant.grower_id = :grower_id LIMIT 1 ');
+        $query->execute(array('owned_id' => $id,
             'grower_id' => $_SESSION['user']));
         $row = $query->fetch();
 
@@ -70,10 +71,22 @@ class OwnedPlant extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES (:grower_id, :plant_id, :acquisition, :status, :location, :distance_window, :soil, :soil_description, :watering, :fertilizing, :details, NOW()) RETURNING id');
-        $query->execute(array('plant_id' => $this->plant_id,
+        $plant = Plant::findByName($this->tradename);
+        if ($plant == null) {
+            $plant = new Plant(array(
+                'tradename' => $this->tradename,
+                'latin_name' => $this->latin_name,
+                'light' => '',
+                'water' => '',
+                'description' => ''
+            ));
+            $plant->save();
+        }
+        $query = DB::connection()->prepare('INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) '
+                . 'VALUES (:grower_id, :plant_id, :acquisition, :status, :location, :distance_window, :soil, :soil_description, :watering, :fertilizing, :details, NOW()) RETURNING id');
+        $query->execute(array('plant_id' => $plant->id,
             'acquisition' => $this->acquisition,
-            'status' => $this->status,
+            'status' => 'elossa',
             'location' => $this->location,
             'distance_window' => $this->distance_window,
             'soil' => $this->soil,
@@ -81,7 +94,6 @@ class OwnedPlant extends BaseModel {
             'watering' => $this->watering,
             'fertilizing' => $this->fertilizing,
             'details' => $this->details,
-            'added' => $this->added,
             'grower_id' => $_SESSION['user']
         ));
         $row = $query->fetch();
@@ -111,6 +123,19 @@ class OwnedPlant extends BaseModel {
         $query->execute(array(
             'id' => $this->id
         ));
+    }
+
+    public function validate_tradename() {
+        return $this->validate_string_length($this->tradename, 3);
+    }
+
+    public function validate_acuisition_date() {
+        $errors = array();
+        if ($this->acquisition == '' || $this->acquisition == null) {
+            $errors[] = 'Päivämäärä ei saa olla tyhjä!';
+        }
+
+        return $errors;
     }
 
 }
