@@ -98,6 +98,24 @@ class Plant extends BaseModel {
     }
 
     public function destroy() {
+        $query = DB::connection()->prepare('DELETE FROM Writer WHERE plant_id = :id');
+        $query->execute(array(
+            'id' => $this->id
+        ));
+        $query = DB::connection()->prepare('SELECT id FROM Owned_Plant WHERE plant_id = :id');
+        $query->execute(array('id' => $this->id));
+        $row = $query->fetch();
+        if ($row) {
+            $query = DB::connection()->prepare('DELETE FROM Diary WHERE owned_id = :id');
+            $query->execute(array(
+                'id' => $row['id']
+            ));
+        }
+
+        $query = DB::connection()->prepare('DELETE FROM Owned_Plant WHERE plant_id = :id');
+        $query->execute(array(
+            'id' => $this->id
+        ));
         $query = DB::connection()->prepare('DELETE FROM Plant WHERE id = :id');
         $query->execute(array(
             'id' => $this->id
@@ -107,4 +125,5 @@ class Plant extends BaseModel {
     public function validate_tradename() {
         return $this->validate_string_length($this->tradename, 3);
     }
+
 }

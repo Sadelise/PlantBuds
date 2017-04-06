@@ -3,7 +3,7 @@
 {% import "macros/forms.html" as forms %}
   <h1>{{plant.tradename}}</h1>
   <p>
-   {{forms.destroy_button("#{base_path}}/description/{#plant.id}/destroy")}}<a href="{{base_path}}/edit_p/{{plant.id}}" class="btn btn-default">Muokkaa</a>
+   {{forms.destroy_button("#{base_path}/description/#{plant.id}/destroy")}}<a href="{{base_path}}/edit_p/{{plant.id}}" class="btn btn-default">Muokkaa</a>
   </p>
   <!-- Tiedot tulee listana tähän -->
 
