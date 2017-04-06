@@ -6,11 +6,12 @@ class Diary extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_title', 'validate_post');
     }
 
-    public static function all($id) {
+    public static function all($owned_plant_id) {
         $query = DB::connection()->prepare('SELECT * FROM Diary LEFT JOIN Owned_Plant ON Diary.owned_id = Owned_Plant.id LEFT JOIN Plant ON Owned_Plant.plant_id = Plant.id WHERE Diary.owned_id = :id AND Diary.grower_id = :grower_id');
-        $query->execute(array('id' => $id,
+        $query->execute(array('id' => $owned_plant_id,
             'grower_id' => $_SESSION['user']
         ));
         $rows = $query->fetchAll();
@@ -78,6 +79,14 @@ class Diary extends BaseModel {
         $query->execute(array(
             'id' => $this->id
         ));
+    }
+
+    public function validate_title() {
+        return $this->validate_string_length($this->title, 3);
+    }
+
+    public function validate_post() {
+        return $this->validate_string_length($this->post, 5);
     }
 
 }

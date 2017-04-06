@@ -10,14 +10,14 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Owned_Plant LEFT JOIN Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id');
+        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id');
         $query->execute(array('grower_id' => $_SESSION['user']));
         $rows = $query->fetchAll();
         $plant = array();
 
         foreach ($rows as $row) {
             $plant[] = new OwnedPlant(array(
-                'id' => $row['id'],
+                'id' => $row['id'], //plant id
                 'tradename' => $row['tradename'],
                 'latin_name' => $row['latin_name'],
                 'grower_id' => $row['grower_id'],
@@ -28,7 +28,7 @@ class OwnedPlant extends BaseModel {
                 'distance_window' => $row['distance_window'],
                 'soil' => $row['soil'],
                 'soil_description' => $row['soil_description'],
-                'watering' => $row['edited'],
+                'watering' => $row['watering'],
                 'fertilizing' => $row['fertilizing'],
                 'details' => $row['details'],
                 'added' => $row['added'],
@@ -58,7 +58,7 @@ class OwnedPlant extends BaseModel {
                 'distance_window' => $row['distance_window'],
                 'soil' => $row['soil'],
                 'soil_description' => $row['soil_description'],
-                'watering' => $row['edited'],
+                'watering' => $row['watering'],
                 'fertilizing' => $row['fertilizing'],
                 'details' => $row['details'],
                 'added' => $row['added']
@@ -101,7 +101,7 @@ class OwnedPlant extends BaseModel {
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE Owned_Plant SET grower_id = :grower_id, plant_id = :plant_id, acquisition = :acquisition, status = :status, location = :location, distance_window = :distance_window, soil = :soil, soil_description = :soil_description, watering = :watering, fertilizing = :fertilizing, details = :details, added = NOW() WHERE id = :id');
+        $query = DB::connection()->prepare('UPDATE Owned_Plant SET grower_id = :grower_id, plant_id = :plant_id, acquisition = :acquisition, status = :status, location = :location, distance_window = :distance_window, soil = :soil, soil_description = :soil_description, watering = :watering, fertilizing = :fertilizing, details = :details WHERE id = :id');
         $query->execute(array('id' => $this->id,
             'plant_id' => $this->plant_id,
             'acquisition' => $this->acquisition,
@@ -113,7 +113,6 @@ class OwnedPlant extends BaseModel {
             'watering' => $this->watering,
             'fertilizing' => $this->fertilizing,
             'details' => $this->details,
-            'added' => $this->added,
             'grower_id' => $_SESSION['user']
         ));
     }

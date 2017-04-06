@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 <h1>{{plant.tradename}}</h1>
 <!-- Painikkeet tähän -->
 <p>
-    <button class="btn btn-danger">Poista</button> <a href="/PlantBuds/edit_o" class="btn btn-default">Muokkaa</a>
+     {{forms.destroy_button("#{base_path}}/care/{#plant.id}/destroy")}} <a href="/PlantBuds/edit_o/{{plant.id}}" class="btn btn-default">Muokkaa</a>
 </p>
 <!-- Tiedot tulee listana tähän -->
 <ul>

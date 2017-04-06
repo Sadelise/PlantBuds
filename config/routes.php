@@ -12,10 +12,6 @@ $routes->get('/frontpage', function() {
     HelloWorldController::frontpage();
 });
 
-$routes->get('/edit_o', function() {
-    HelloWorldController::edit_ownplant();
-});
-
 $routes->get('/edit_diary', function() {
     HelloWorldController::edit_diary();
 });
@@ -36,6 +32,10 @@ $routes->post('/description/:id/destroy', function($id) {
     PlantController::destroy($id);
 });
 
+$routes->post('/care/:id/destroy', function($id) {
+    OwnPlantController::destroy($id);
+});
+
 $routes->get('/description/:id', function($id) {
     PlantController::show($id);
 });
@@ -46,6 +46,14 @@ $routes->get('/edit_p/:id', function($id) {
 
 $routes->post('/edit_p/:id', function($id) {
     PlantController::update($id);
+});
+
+$routes->get('/edit_o/:id', function($id) {
+    OwnPlantController::edit($id);
+});
+
+$routes->post('/edit_o/:id', function($id) {
+    OwnPlantController::update($id);
 });
 
 $routes->get('/list_o', function() {

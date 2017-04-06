@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 <h1>Käyttäjän {{user_logged_in.username}} kasvit</h1>
 
 <p>
@@ -30,7 +31,7 @@
             <td><label class="label label-danger">kuollut</label></td>
             {% endif %}
             <td>{{plant.added}}</td>
-            <th><a class="btn btn-default btn-sm" href="{{base_path}}/edit_o">Muokkaa</a></th>   
+            <th><a class="btn btn-default btn-sm" href="{{base_path}}/edit_o/{{plant.id}}">Muokkaa</a></th>   
             <th><a class="btn btn-default btn-sm" href="{{base_path}}/diarylist/{{plant.id}}">Päiväkirjamerkinnät</a></th>
         </tr>
         {% endfor %}

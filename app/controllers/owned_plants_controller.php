@@ -48,22 +48,18 @@ class OwnPlantController extends BaseController {
 
     public static function update($id) {
         $params = $_POST;
-
+        
         $attributes = array(
             'tradename' => $params['tradename'],
             'latin_name' => $params['latin_name'],
-            'grower_id' => $params['grower_id'],
-            'plant_id' => $params['plant_id'],
             'acquisition' => $params['acquisition'],
-            'status' => $params['status'],
             'location' => $params['location'],
             'distance_window' => $params['distance_window'],
             'soil' => $params['soil'],
             'soil_description' => $params['soil_description'],
-            'watering' => $params['edited'],
+            'watering' => $params['watering'],
             'fertilizing' => $params['fertilizing'],
-            'details' => $params['details'],
-            'added' => $params['added']
+            'details' => $params['details']
         );
 
         $plant = new OwnedPlant($attributes);
@@ -73,8 +69,7 @@ class OwnPlantController extends BaseController {
             View::make('suunnitelmat/edit_ownplant.html', array('errors' => $errors, 'attributes' => $attributes));
         } else {
             $plant->update();
-
-            Redirect::to('/list_o/' . $plant->id, array('message' => 'Kasvia on muokattu onnistuneesti!'));
+            Redirect::to('/care/' . $id, array('message' => 'Kasvia on muokattu onnistuneesti!'));
         }
     }
 

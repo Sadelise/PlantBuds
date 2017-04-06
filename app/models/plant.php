@@ -89,31 +89,22 @@ class Plant extends BaseModel {
     public function update() {
         $query = DB::connection()->prepare('UPDATE Plant SET tradename = :tradename, latin_name = :latin_name, light = :light, water = :water, description = :description, edited = NOW() WHERE id = :id');
         $query->execute(array('tradename' => $this->tradename,
-        'latin_name' => $this->latin_name,
-        'water' => $this->water,
-        'light' => $this->light,
-        'description' => $this->description,
-        'id' => $this->id
+            'latin_name' => $this->latin_name,
+            'water' => $this->water,
+            'light' => $this->light,
+            'description' => $this->description,
+            'id' => $this->id
         ));
     }
 
-       public function destroy() {
+    public function destroy() {
         $query = DB::connection()->prepare('DELETE FROM Plant WHERE id = :id');
         $query->execute(array(
-        'id' => $this->id
+            'id' => $this->id
         ));
     }
-    
+
     public function validate_tradename() {
-        $errors = array();
-        if ($this->tradename == '' || $this->tradename == null) {
-            $errors[] = 'Nimi ei saa olla tyhjä!';
-        }
-        if (strlen($this->tradename) < 3) {
-            $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
-        }
-
-        return $errors;
+        return $this->validate_string_length($this->tradename, 3);
     }
-
 }
