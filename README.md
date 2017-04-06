@@ -5,8 +5,11 @@ Yleisiä linkkejä:
 * [Linkki sovellukseeni](https://sharhio.users.cs.helsinki.fi/PlantBuds)
 * [Linkki dokumentaatiooni](https://github.com/Sadelise/PlantBuds/blob/master/doc/Dokumentaatio.pdf)
 
-Linkit eri sivuille:
+Tunnukset testaukseen:
+* Käyttäjätunnus: Vieras
+* Salasana: 1234
 
+Linkit eri sivuille:
 
 * [Yksittäisen omistetun kasvin sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/care/1)
 * [Omistetun kasvin editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_o)

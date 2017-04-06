@@ -78,7 +78,7 @@ class OwnedPlant extends BaseModel {
                 'latin_name' => $this->latin_name,
                 'light' => '',
                 'water' => '',
-                'description' => ''
+                'description' => 'Tämä kuvaus on tyhjä. Muokkaa lisätäksesi kuvaus kasville.'
             ));
             $plant->save();
         }

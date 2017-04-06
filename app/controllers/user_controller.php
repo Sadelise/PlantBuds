@@ -3,11 +3,11 @@
 class UserController extends BaseController {
 
     public static function login() {
-        if ($_SESSION['user']) {
-            Redirect::to('/list_o');
-        } else {
-            View::make('user/login.html');
-        }
+//        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+//            Redirect::to('/list_o');
+//        } else {
+        View::make('user/login.html');
+//        }
     }
 
     public static function handle_login() {
