@@ -9,6 +9,6 @@
 </p>
 
 <p>
-    <button class="btn btn-danger">Poista</button> <a href="/PlantBuds/edit_diary" class="btn btn-default">Muokkaa</a>
+    {{forms.destroy_button("#{base_path}/diary/#{diary.id}/destroy")}} <a href="/PlantBuds/edit_diary" class="btn btn-default">Muokkaa</a>
 </p>
 {% endblock %}

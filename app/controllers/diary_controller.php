@@ -3,7 +3,7 @@
 class DiaryController extends BaseController {
 
     public static function index($id) {
-        $diary = Diary::all($id);
+        $diary = Diary::allByOwnedPlantId($id);
         $tradename = '';
         $plant_id = '';
         $ownplant = OwnedPlant::find($id);

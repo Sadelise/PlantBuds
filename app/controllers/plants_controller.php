@@ -68,6 +68,24 @@ class PlantController extends BaseController {
 
     public static function destroy($id) {
         $plant = new Plant(array('id' => $id));
+
+        $writers = Writer::findAllByPlant($id);
+        if ($writers) {
+            $writer = new Writer(array('plant_id' => $writers['plant_id']));
+            $writer->destroy();
+        }
+
+        $owned_plants = OwnedPlant::allByPlantId($id);
+        if ($owned_plants) {
+            $owned_plant = new OwnedPlant(array('id' => $owned_plants['id']));
+            $diary_entries = Diary::all();
+            if ($diary_entries) {
+                $diary = new Diary(array('id' => $diary_entries['id']));
+                $diary->destroy();
+            }
+            $owned_plant->destroy();
+        }
+
         $plant->destroy();
 
         Redirect::to('/list_p', array('message' => 'Kasvi on poistettu onnistuneesti!'));

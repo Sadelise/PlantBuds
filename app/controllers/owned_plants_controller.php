@@ -3,7 +3,7 @@
 class OwnPlantController extends BaseController {
 
     public static function index() {
-        $plants = OwnedPlant::all();
+        $plants = OwnedPlant::all($_SESSION['user']);
         View::make('suunnitelmat/list_ownplant.html', array('plants' => $plants));
     }
 

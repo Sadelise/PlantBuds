@@ -8,8 +8,28 @@ class Diary extends BaseModel {
         parent::__construct($attributes);
         $this->validators = array('validate_title', 'validate_post');
     }
+    
+        public static function all() {
+        $query = DB::connection()->prepare('SELECT * FROM Diary');
+        $query->execute();
+        $rows = $query->fetchAll();
+        $diary = array();
 
-    public static function all($owned_plant_id) {
+        foreach ($rows as $row) {
+            $diary[] = new Diary(array(
+                'id' => $row['id'],
+                'grower_id' => $row['grower_id'],
+                'owned_id' => $row['owned_id'],
+                'title' => $row['title'],
+                'posted' => $row['posted'],
+                'post' => $row['post'],
+            ));
+        }
+
+        return $diary;
+    }
+
+    public static function allByOwnedPlantId($owned_plant_id) {
         $query = DB::connection()->prepare('SELECT * FROM Diary LEFT JOIN Owned_Plant ON Diary.owned_id = Owned_Plant.id LEFT JOIN Plant ON Owned_Plant.plant_id = Plant.id WHERE Diary.owned_id = :id AND Diary.grower_id = :grower_id');
         $query->execute(array('id' => $owned_plant_id,
             'grower_id' => $_SESSION['user']

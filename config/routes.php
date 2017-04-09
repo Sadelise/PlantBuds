@@ -80,6 +80,10 @@ $routes->get('/diarypost/:id', function($id) {
 //    DiaryController::store();
 //});
 
+$routes->post('/diary/:id/destroy', function($id) {
+    PlantController::destroy($id);
+});
+
 $routes->get('/addOwnPlant', function() {
     OwnPlantController::newPlant();
 });
