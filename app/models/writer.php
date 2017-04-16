@@ -16,7 +16,7 @@ class Writer extends BaseModel {
         $writer = array();
 
         foreach ($rows as $row) {
-            $writer[] = new Plant(array(
+            $writer[] = new Writer(array(
                 'grower_id' => $row['grower_id'],
                 'plant_id' => $row['plant_id'],
             ));
@@ -26,7 +26,7 @@ class Writer extends BaseModel {
     }
 
     public function destroy() {
-        $query = DB::connection()->prepare('DELETE FROM Writer WHERE id = :id');
+        $query = DB::connection()->prepare('DELETE FROM Writer WHERE plant_id = :id');
         $query->execute(array(
             'id' => $this->plant_id
         ));

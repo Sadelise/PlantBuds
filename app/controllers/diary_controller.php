@@ -35,7 +35,7 @@ class DiaryController extends BaseController {
     public static function newDiary($tradename, $ownplant_id) {
         self::check_logged_in();
         $plant = Plant::findByName($tradename);
-        View::make('diary/addDiary.html', array('plant' => $plant, 'ownplant_id' => $ownplant_id));
+        View::make('diary/add_diary.html', array('plant' => $plant, 'ownplant_id' => $ownplant_id));
     }
 
     public static function store($tradename, $ownplant_id) {
@@ -55,7 +55,7 @@ class DiaryController extends BaseController {
             $diary->save();
             Redirect::to('/diarypost/' . $diary->id, array('message' => 'Päiväkirjamerkintä tallennettu!'));
         } else {
-            View::make('diary/addDiary.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('diary/add_diary.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 

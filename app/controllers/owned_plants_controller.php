@@ -31,7 +31,7 @@ class OwnPlantController extends BaseController {
 
     public static function newPlant() {
         self::check_logged_in();
-        View::make('ownplant/addOwnPlant.html');
+        View::make('ownplant/add_own_plant.html');
     }
 
     public static function store() {
@@ -56,7 +56,7 @@ class OwnPlantController extends BaseController {
             $plant->save();
             Redirect::to('/care/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
         } else {
-            View::make('ownplant/addOwnPlant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('ownplant/add_own_plant.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 

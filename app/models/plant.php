@@ -9,27 +9,6 @@ class Plant extends BaseModel {
         $this->validators = array('validate_tradename');
     }
 
-//    public static function all() {
-//        $query = DB::connection()->prepare('SELECT * FROM Plant');
-//        $query->execute();
-//        $rows = $query->fetchAll();
-//        $plant = array();
-//
-//        foreach ($rows as $row) {
-//            $plant[] = new Plant(array(
-//                'id' => $row['id'],
-//                'tradename' => $row['tradename'],
-//                'latin_name' => $row['latin_name'],
-//                'light' => $row['light'],
-//                'water' => $row['water'],
-//                'description' => $row['description'],
-//                'edited' => $row['edited']
-//            ));
-//        }
-//
-//        return $plant;
-//    }
-
     public static function all($options) {
         $query_string = 'SELECT * FROM Plant';
         $loptions = array();

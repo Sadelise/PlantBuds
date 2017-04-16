@@ -32,7 +32,7 @@ class PlantController extends BaseController {
     }
 
     public static function newPlant() {
-        View::make('plant/addPlant.html');
+        View::make('plant/add_plant.html');
     }
 
     public static function store() {
@@ -52,7 +52,7 @@ class PlantController extends BaseController {
             $plant->save();
             Redirect::to('/description/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
         } else {
-            View::make('plant/addPlant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('plant/add_plant.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 

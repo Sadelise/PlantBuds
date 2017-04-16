@@ -9,35 +9,6 @@ class OwnedPlant extends BaseModel {
         $this->validators = array('validate_tradename', 'validate_acuisition_date');
     }
 
-//    public static function all($id) {
-//        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id');
-//        $query->execute(array('grower_id' => $id));
-//        $rows = $query->fetchAll();
-//        $plant = array();
-//
-//        foreach ($rows as $row) {
-//            $plant[] = new OwnedPlant(array(
-//                'id' => $row['id'], //plant id
-//                'tradename' => $row['tradename'],
-//                'latin_name' => $row['latin_name'],
-//                'grower_id' => $id,
-//                'plant_id' => $row['plant_id'],
-//                'acquisition' => $row['acquisition'],
-//                'status' => $row['status'],
-//                'location' => $row['location'],
-//                'distance_window' => $row['distance_window'],
-//                'soil' => $row['soil'],
-//                'soil_description' => $row['soil_description'],
-//                'watering' => $row['watering'],
-//                'fertilizing' => $row['fertilizing'],
-//                'details' => $row['details'],
-//                'added' => $row['added'],
-//            ));
-//        }
-//
-//        return $plant;
-//    }
-
     public static function all($options) {
         $query_string = 'SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id';
         $loptions['grower_id'] = $options['grower_id'];
@@ -65,10 +36,10 @@ class OwnedPlant extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Owned_Plant WHERE plant_id = :plant_id');
         $query->execute(array('plant_id' => $id));
         $rows = $query->fetchAll();
-        $plant = array();
+        $plants = array();
 
         foreach ($rows as $row) {
-            $plant[] = new OwnedPlant(array(
+            $plants[] = new OwnedPlant(array(
                 'id' => $row['id'],
                 'grower_id' => $row['grower_id'],
                 'plant_id' => $row['plant_id'],
@@ -85,7 +56,7 @@ class OwnedPlant extends BaseModel {
             ));
         }
 
-        return $plant;
+        return $plants;
     }
 
     public static function find($id) {
@@ -218,8 +189,8 @@ class OwnedPlant extends BaseModel {
         $test_arrr = explode('-', $test_date);
         if (count($test_arr) == 3) {
             if (!(checkdate($test_arr[1], $test_arr[0], $test_arr[2]))) {
-                if(!(checkdate($test_arrr[1], $test_arrr[2], $test_arrr[0]))) {
-                $errors[] = 'Anna päivämäärä muodossa pp.kk.vvvv';
+                if (!(checkdate($test_arrr[1], $test_arrr[2], $test_arrr[0]))) {
+                    $errors[] = 'Anna päivämäärä muodossa pp.kk.vvvv';
                 }
             }
         } else {
