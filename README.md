@@ -15,8 +15,8 @@ Linkit eri sivuille:
 * [Kasvikuvauksen sivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/description/1)
 * [Kasvikuvauksen editointi](https://sharhio.users.cs.helsinki.fi/PlantBuds/edit_p/1)
 * [Omien kasvien listaus, vaatii kirjautumisen](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_o)
-* [Oman kasvin esittelysivu, vaatii kirjautumisen] (http://sharhio.users.cs.helsinki.fi/PlantBuds/care/5)
-* [Oman kasvin muokkaussivu, vaatii kirjautumisen] (http://sharhio.users.cs.helsinki.fi/PlantBuds/edit_o/5)
+* [Oman kasvin esittelysivu, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/care/5)
+* [Oman kasvin muokkaussivu, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/edit_o/5)
 * [Kirjautumissivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/login)
 
 ## Työn aihe
