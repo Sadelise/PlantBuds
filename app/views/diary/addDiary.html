@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää päiväkirjamerkintä liittyen kasviin {{diary.tradename}}</h1>
+<h1>Lisää päiväkirjamerkintä liittyen kasviin {{plant.tradename}}</h1>
 
-<form method="post" action="{{base_path}}/newDiary">
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<form method="post" action="{{base_path}}/newDiary/{{plant.tradename}}/{{ownplant_id}}">
     <div class="form-group">
         <label>Otsikko</label>
         <input name="title" class="form-control" value="" type="text">

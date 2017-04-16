@@ -1,103 +1,109 @@
 <?php
 
 $routes->get('/', function() {
-    HelloWorldController::index();
+HelloWorldController::index();
 });
 
 $routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
+HelloWorldController::sandbox();
 });
 
 $routes->get('/frontpage', function() {
-    HelloWorldController::frontpage();
+HelloWorldController::frontpage();
 });
 
 $routes->get('/edit_diary', function() {
-    HelloWorldController::edit_diary();
+HelloWorldController::edit_diary();
 });
 
 $routes->get('/list_p', function() {
-    PlantController::index();
+PlantController::index();
 });
 
 $routes->get('/addPlant', function() {
-    PlantController::newPlant();
+PlantController::newPlant();
 });
 
 $routes->post('/description/new', function() {
-    PlantController::store();
+PlantController::store();
 });
 
 $routes->post('/description/:id/destroy', function($id) {
-    PlantController::destroy($id);
+PlantController::destroy($id);
 });
 
 $routes->post('/care/:id/destroy', function($id) {
-    OwnPlantController::destroy($id);
+OwnPlantController::destroy($id);
 });
 
 $routes->get('/description/:id', function($id) {
-    PlantController::show($id);
+PlantController::show($id);
 });
 
 $routes->get('/edit_p/:id', function($id) {
-    PlantController::edit($id);
+PlantController::edit($id);
 });
 
 $routes->post('/edit_p/:id', function($id) {
-    PlantController::update($id);
+PlantController::update($id);
 });
 
 $routes->get('/edit_o/:id', function($id) {
-    OwnPlantController::edit($id);
+OwnPlantController::edit($id);
 });
 
 $routes->post('/edit_o/:id', function($id) {
-    OwnPlantController::update($id);
+OwnPlantController::update($id);
 });
 
 $routes->get('/list_o', function() {
-    OwnPlantController::index();
+OwnPlantController::index();
 });
 
 $routes->get('/care/:id', function($id) {
-    OwnPlantController::show($id);
+OwnPlantController::show($id);
 });
 
-$routes->get('/addDiary/:tradename', function($tradename) {
-    DiaryController::newDiary($tradename);
+$routes->get('/addDiary/:tradename/:id', function($tradename, $id) {
+DiaryController::newDiary($tradename, $id);
 });
 
 $routes->get('/diarylist/:id', function($id) {
-    DiaryController::index($id);
+DiaryController::index($id);
 });
 
-$routes->get('/diarypost/:id', function($id) {
-    DiaryController::show($id);
+$routes->get('/diarypost/:id/:owned_id', function($id, $owned_id) {
+DiaryController::show($id, $owned_id);
 });
 
-//$routes->post('/newDiary', function() {
-//    DiaryController::store();
-//});
+$routes->post('/newDiary/:tradename/:id', function($tradename, $id) {
+DiaryController::store($tradename, $id);
+});
 
-$routes->post('/diary/:id/destroy', function($id) {
-    PlantController::destroy($id);
+$routes->post('/diary/:id/destroy/:owned_id', function($id, $owned_id) {
+DiaryController::destroy($id, $owned_id);
 });
 
 $routes->get('/addOwnPlant', function() {
-    OwnPlantController::newPlant();
+OwnPlantController::newPlant();
 });
 
 $routes->post('/newOwnPlant', function() {
-    OwnPlantController::store();
+OwnPlantController::store();
+});
+
+$routes->post('/logout', function() {
+UserController::logout();
 });
 
 $routes->get('/login', function() {
-    // Kirjautumislomakkeen esittäminen
-    UserController::login();
+// Kirjautumislomakkeen esittäminen
+UserController::login();
 });
 
 $routes->post('/login', function() {
-    // Kirjautumisen käsittely
-    UserController::handle_login();
+// Kirjautumisen käsittely
+UserController::handle_login();
 });
+
+

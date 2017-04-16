@@ -3,11 +3,7 @@
 class UserController extends BaseController {
 
     public static function login() {
-//        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-//            Redirect::to('/list_o');
-//        } else {
         View::make('user/login.html');
-//        }
     }
 
     public static function handle_login() {
@@ -20,8 +16,13 @@ class UserController extends BaseController {
         } else {
             $_SESSION['user'] = $user->id;
 
-            Redirect::to('/', array('message' => 'Tervetuloa takaisin ' . $user->username . '!'));
+            Redirect::to('/list_o', array('message' => 'Tervetuloa takaisin ' . $user->username . '!'));
         }
+    }
+
+    public static function logout() {
+        $_SESSION['user'] = null;
+        Redirect::to('/login', array('message' => 'Olet kirjautunut ulos!'));
     }
 
 }

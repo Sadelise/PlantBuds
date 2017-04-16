@@ -3,25 +3,39 @@
 class OwnPlantController extends BaseController {
 
     public static function index() {
-        $plants = OwnedPlant::all($_SESSION['user']);
-        View::make('suunnitelmat/list_ownplant.html', array('plants' => $plants));
+        self::check_logged_in();
+        $user_logged_in = self::get_user_logged_in();
+        $params = $_GET;
+        $options = array('grower_id' => $user_logged_in->id);
+
+        if (isset($params['search'])) {
+            $options['search'] = $params['search'];
+        }
+        $plants = OwnedPlant::all($options);
+
+//        $plants = OwnedPlant::all($_SESSION['user']);
+        View::make('ownplant/list_ownplant.html', array('plants' => $plants));
     }
 
     public static function show($id) {
+        self::check_logged_in();
         $plant = OwnedPlant::find($id);
-        View::make('suunnitelmat/caredescription.html', array('plant' => $plant));
+        View::make('ownplant/caredescription.html', array('plant' => $plant));
     }
 
     public static function edit($id) {
+        self::check_logged_in();
         $plant = OwnedPlant::find($id);
-        View::make('suunnitelmat/edit_ownplant.html', array('plant' => $plant));
+        View::make('ownplant/edit_ownplant.html', array('plant' => $plant));
     }
 
     public static function newPlant() {
-        View::make('suunnitelmat/addOwnPlant.html');
+        self::check_logged_in();
+        View::make('ownplant/addOwnPlant.html');
     }
 
     public static function store() {
+        self::check_logged_in();
         $params = $_POST;
         $attributes = array(
             'tradename' => $params['tradename'],
@@ -42,13 +56,14 @@ class OwnPlantController extends BaseController {
             $plant->save();
             Redirect::to('/care/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
         } else {
-            View::make('suunnitelmat/addOwnPlant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('ownplant/addOwnPlant.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 
     public static function update($id) {
+        self::check_logged_in();
         $params = $_POST;
-        
+
         $attributes = array(
             'tradename' => $params['tradename'],
             'latin_name' => $params['latin_name'],
@@ -66,7 +81,7 @@ class OwnPlantController extends BaseController {
         $errors = $plant->errors();
 
         if (count($errors) > 0) {
-            View::make('suunnitelmat/edit_ownplant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('ownplant/edit_ownplant.html', array('errors' => $errors, 'attributes' => $attributes));
         } else {
             $plant->update();
             Redirect::to('/care/' . $id, array('message' => 'Kasvia on muokattu onnistuneesti!'));
@@ -74,7 +89,14 @@ class OwnPlantController extends BaseController {
     }
 
     public static function destroy($id) {
-        $plant = new OwnedPlant(array('id' => $id));
+        self::check_logged_in();
+        $plant = OwnedPlant::find($id);
+        $diary_entries = Diary::allByOwnedPlantId($id);
+        if ($diary_entries) {
+            $diary = new Diary(array('id' => $diary_entries['id']));
+            $diary->destroy();
+        }
+
         $plant->destroy();
 
         Redirect::to('/list_o', array('message' => 'Kasvi on poistettu onnistuneesti!'));

@@ -3,22 +3,36 @@
 class PlantController extends BaseController {
 
     public static function index() {
-        $plants = Plant::all();
-        View::make('suunnitelmat/list_plant.html', array('plants' => $plants));
+        $params = $_GET;
+
+        $options = array();
+        if (isset($params['search'])) {
+            $options['search'] = $params['search'];
+        }
+        $plants = Plant::all($options);
+
+        View::make('plant/list_plant.html', array('plants' => $plants));
+
+//        Kint::dump($params);
+//        Kint::dump($options);
     }
+
+//        $plants = Plant::all();
+//        View::make('plant/list_plant.html', array('plants' => $plants));
+//    }
 
     public static function show($id) {
         $plant = Plant::find($id);
-        View::make('suunnitelmat/plantdescription.html', array('plant' => $plant));
+        View::make('plant/plantdescription.html', array('plant' => $plant));
     }
 
     public static function edit($id) {
         $plant = Plant::find($id);
-        View::make('suunnitelmat/edit_plant.html', array('plant' => $plant));
+        View::make('plant/edit_plant.html', array('plant' => $plant));
     }
 
     public static function newPlant() {
-        View::make('suunnitelmat/addPlant.html');
+        View::make('plant/addPlant.html');
     }
 
     public static function store() {
@@ -38,7 +52,7 @@ class PlantController extends BaseController {
             $plant->save();
             Redirect::to('/description/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
         } else {
-            View::make('suunnitelmat/addPlant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('plant/addPlant.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 
@@ -58,7 +72,7 @@ class PlantController extends BaseController {
         $errors = $plant->errors();
 
         if (count($errors) > 0) {
-            View::make('suunnitelmat/edit_plant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('plant/edit_plant.html', array('errors' => $errors, 'attributes' => $attributes));
         } else {
             $plant->update();
 

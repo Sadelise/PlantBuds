@@ -9,36 +9,59 @@ class OwnedPlant extends BaseModel {
         $this->validators = array('validate_tradename', 'validate_acuisition_date');
     }
 
-    public static function all($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id');
-        $query->execute(array('grower_id' => $id));
-        $rows = $query->fetchAll();
-        $plant = array();
+//    public static function all($id) {
+//        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id');
+//        $query->execute(array('grower_id' => $id));
+//        $rows = $query->fetchAll();
+//        $plant = array();
+//
+//        foreach ($rows as $row) {
+//            $plant[] = new OwnedPlant(array(
+//                'id' => $row['id'], //plant id
+//                'tradename' => $row['tradename'],
+//                'latin_name' => $row['latin_name'],
+//                'grower_id' => $id,
+//                'plant_id' => $row['plant_id'],
+//                'acquisition' => $row['acquisition'],
+//                'status' => $row['status'],
+//                'location' => $row['location'],
+//                'distance_window' => $row['distance_window'],
+//                'soil' => $row['soil'],
+//                'soil_description' => $row['soil_description'],
+//                'watering' => $row['watering'],
+//                'fertilizing' => $row['fertilizing'],
+//                'details' => $row['details'],
+//                'added' => $row['added'],
+//            ));
+//        }
+//
+//        return $plant;
+//    }
 
-        foreach ($rows as $row) {
-            $plant[] = new OwnedPlant(array(
-                'id' => $row['id'], //plant id
-                'tradename' => $row['tradename'],
-                'latin_name' => $row['latin_name'],
-                'grower_id' => $id,
-                'plant_id' => $row['plant_id'],
-                'acquisition' => $row['acquisition'],
-                'status' => $row['status'],
-                'location' => $row['location'],
-                'distance_window' => $row['distance_window'],
-                'soil' => $row['soil'],
-                'soil_description' => $row['soil_description'],
-                'watering' => $row['watering'],
-                'fertilizing' => $row['fertilizing'],
-                'details' => $row['details'],
-                'added' => $row['added'],
-            ));
+    public static function all($options) {
+        $query_string = 'SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id';
+        $loptions['grower_id'] = $options['grower_id'];
+        if (isset($options['search'])) {
+            $query_string .= ' AND LOWER(Plant.tradename) LIKE LOWER(:like)';
+            $loptions['like'] = '%' . $options['search'] . '%';
         }
 
-        return $plant;
+        $query = DB::connection()->prepare($query_string);
+        $query->execute($loptions);
+
+        $rows = $query->fetchAll();
+        $plants = array();
+
+//        Kint::dump($loptions);
+//        Kint::dump($options);
+
+        foreach ($rows as $row) {
+            $plants[] = new OwnedPlant($row);
+        }
+        return $plants;
     }
-    
-     public static function allByPlantId($id) {
+
+    public static function allByPlantId($id) {
         $query = DB::connection()->prepare('SELECT * FROM Owned_Plant WHERE plant_id = :plant_id');
         $query->execute(array('plant_id' => $id));
         $rows = $query->fetchAll();
@@ -46,7 +69,7 @@ class OwnedPlant extends BaseModel {
 
         foreach ($rows as $row) {
             $plant[] = new OwnedPlant(array(
-                'id' => $row['id'], 
+                'id' => $row['id'],
                 'grower_id' => $row['grower_id'],
                 'plant_id' => $row['plant_id'],
                 'acquisition' => $row['acquisition'],
@@ -64,11 +87,41 @@ class OwnedPlant extends BaseModel {
 
         return $plant;
     }
-    
+
     public static function find($id) {
         $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.id = :owned_id AND Owned_Plant.grower_id = :grower_id LIMIT 1 ');
         $query->execute(array('owned_id' => $id,
             'grower_id' => $_SESSION['user']));
+        $row = $query->fetch();
+
+        if ($row) {
+            $plant = new ownedPlant(array(
+                'id' => $row['id'],
+                'tradename' => $row['tradename'],
+                'latin_name' => $row['latin_name'],
+                'grower_id' => $row['grower_id'],
+                'plant_id' => $row['plant_id'],
+                'acquisition' => $row['acquisition'],
+                'status' => $row['status'],
+                'location' => $row['location'],
+                'distance_window' => $row['distance_window'],
+                'soil' => $row['soil'],
+                'soil_description' => $row['soil_description'],
+                'watering' => $row['watering'],
+                'fertilizing' => $row['fertilizing'],
+                'details' => $row['details'],
+                'added' => $row['added']
+            ));
+
+            return $plant;
+        }
+
+        return null;
+    }
+
+    public static function findByTradeName($tradename) {
+        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Plant.tradename = :tradename LIMIT 1');
+        $query->execute(array('tradename' => $tradename));
         $row = $query->fetch();
 
         if ($row) {
@@ -144,15 +197,6 @@ class OwnedPlant extends BaseModel {
     }
 
     public function destroy() {
-        $query = DB::connection()->prepare('SELECT id FROM Owned_Plant WHERE id = :id');
-        $query->execute(array('id' => $this->id));
-        $row = $query->fetch();
-        if ($row) {
-            $query = DB::connection()->prepare('DELETE FROM Diary WHERE owned_id = :id');
-            $query->execute(array('id' => $row['id']
-            ));
-        }
-
         $query = DB::connection()->prepare('DELETE FROM Owned_Plant WHERE id = :id');
         $query->execute(array(
             'id' => $this->id
@@ -171,9 +215,12 @@ class OwnedPlant extends BaseModel {
 
         $test_date = $this->acquisition;
         $test_arr = explode('.', $test_date);
+        $test_arrr = explode('-', $test_date);
         if (count($test_arr) == 3) {
             if (!(checkdate($test_arr[1], $test_arr[0], $test_arr[2]))) {
+                if(!(checkdate($test_arrr[1], $test_arrr[2], $test_arrr[0]))) {
                 $errors[] = 'Anna päivämäärä muodossa pp.kk.vvvv';
+                }
             }
         } else {
             $errors[] = 'Anna päivämäärä muodossa pp.kk.vvvv';

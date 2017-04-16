@@ -9,25 +9,46 @@ class Plant extends BaseModel {
         $this->validators = array('validate_tradename');
     }
 
-    public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Plant');
-        $query->execute();
+//    public static function all() {
+//        $query = DB::connection()->prepare('SELECT * FROM Plant');
+//        $query->execute();
+//        $rows = $query->fetchAll();
+//        $plant = array();
+//
+//        foreach ($rows as $row) {
+//            $plant[] = new Plant(array(
+//                'id' => $row['id'],
+//                'tradename' => $row['tradename'],
+//                'latin_name' => $row['latin_name'],
+//                'light' => $row['light'],
+//                'water' => $row['water'],
+//                'description' => $row['description'],
+//                'edited' => $row['edited']
+//            ));
+//        }
+//
+//        return $plant;
+//    }
+
+    public static function all($options) {
+        $query_string = 'SELECT * FROM Plant';
+        $loptions = array();
+        if (isset($options['search'])) {
+            $query_string .= ' WHERE LOWER(tradename) LIKE LOWER(:like)';
+            $loptions['like'] = '%' . $options['search'] . '%';
+        }
+        $query = DB::connection()->prepare($query_string);
+        $query->execute($loptions);
+
         $rows = $query->fetchAll();
-        $plant = array();
+        $plants = array();
 
         foreach ($rows as $row) {
-            $plant[] = new Plant(array(
-                'id' => $row['id'],
-                'tradename' => $row['tradename'],
-                'latin_name' => $row['latin_name'],
-                'light' => $row['light'],
-                'water' => $row['water'],
-                'description' => $row['description'],
-                'edited' => $row['edited']
-            ));
+            $plants[] = new Plant($row);
         }
-
-        return $plant;
+//          Kint::dump($loptions);
+//          Kint::dump($options);
+        return $plants;
     }
 
     public static function find($id) {
