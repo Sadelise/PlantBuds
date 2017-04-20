@@ -15,14 +15,14 @@ CREATE TABLE Plant(
 );
 
 CREATE TABLE Writer(
-  grower_id INTEGER REFERENCES Grower(id),
-  plant_id INTEGER REFERENCES Plant(id)
+  grower_id INTEGER REFERENCES Grower(id) ON DELETE CASCADE,
+  plant_id INTEGER REFERENCES Plant(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Owned_Plant(
   id SERIAL PRIMARY KEY,
-  grower_id INTEGER REFERENCES Grower(id) NOT NULL, 
-  plant_id INTEGER REFERENCES Plant(id) NOT NULL,
+  grower_id INTEGER REFERENCES Grower(id) ON DELETE CASCADE, 
+  plant_id INTEGER REFERENCES Plant(id) ON DELETE CASCADE,
   acquisition date,
   status varchar NOT NULL,
   location varchar NOT NULL,
@@ -37,8 +37,8 @@ CREATE TABLE Owned_Plant(
 
 CREATE TABLE Diary(
   id SERIAL PRIMARY KEY,
-  grower_id INTEGER REFERENCES Grower(id),
-  owned_id INTEGER REFERENCES Owned_Plant(id),
+  grower_id INTEGER REFERENCES Grower(id) ON DELETE CASCADE,
+  owned_id INTEGER REFERENCES Owned_Plant(id) ON DELETE CASCADE,
   title varchar(50),
   posted DATE NOT NULL,
   post text NOT NULL 

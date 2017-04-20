@@ -91,14 +91,7 @@ class OwnPlantController extends BaseController {
     public static function destroy($id) {
         self::check_logged_in();
         $plant = OwnedPlant::find($id);
-        $diary_entries = Diary::allByOwnedPlantId($id);
-        if ($diary_entries) {
-            $diary = new Diary(array('id' => $diary_entries['id']));
-            $diary->destroy();
-        }
-
         $plant->destroy();
-
         Redirect::to('/list_o', array('message' => 'Kasvi on poistettu onnistuneesti!'));
     }
 

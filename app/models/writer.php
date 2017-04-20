@@ -31,5 +31,4 @@ class Writer extends BaseModel {
             'id' => $this->plant_id
         ));
     }
-
 }
