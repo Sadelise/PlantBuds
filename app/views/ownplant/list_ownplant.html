@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 {% import "macros/forms.html" as forms %}
-<h1>Käyttäjän {{user_logged_in.username}} kasvit</h1>
+{% if message %}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{% endif %}
+<h1>{{user_logged_in.username}}: Omat kasvisi</h1>
 
 <p>
     <a href="{{base_path}}/addOwnPlant" class="btn btn-success">Lisää kasvi</a>

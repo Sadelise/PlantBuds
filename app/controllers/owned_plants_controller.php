@@ -31,7 +31,13 @@ class OwnPlantController extends BaseController {
 
     public static function newPlant() {
         self::check_logged_in();
-        View::make('ownplant/add_own_plant.html');
+        $params = $_GET;
+        $options = array();
+        if (isset($params['search'])) {
+            $options['search'] = $params['search'];
+        }
+        $plants = Plant::all($options);
+        View::make('ownplant/add_own_plant.html', array('plants' => $plants));
     }
 
     public static function store() {
@@ -39,7 +45,8 @@ class OwnPlantController extends BaseController {
         $params = $_POST;
         $attributes = array(
             'tradename' => $params['tradename'],
-            'latin_name' => $params['latin_name'],
+            'tradename2' => $params['tradename2'],
+            'latin_name2' => $params['latin_name2'],
             'acquisition' => $params['acquisition'],
             'location' => $params['location'],
             'distance_window' => $params['distance_window'],
@@ -49,22 +56,42 @@ class OwnPlantController extends BaseController {
             'fertilizing' => $params['fertilizing'],
             'details' => $params['details']
         );
+        if ($params['tradename2'] != '') {
+            $attributes['tradename'] = $params['tradename2'];
+            $attributes += array('latin_name' => $params['latin_name2']);
+        } else {
+            $latin_plant = Plant::findByName($params['tradename2']);
+            if ($latin_plant != null) {
+                $attributes['latin_name'] = $latin_plant->latin_name;
+            }
+        }
+
         $plant = new OwnedPlant($attributes);
         $errors = $plant->errors();
+        $options = array();
+        $plants = Plant::all($options);
 
         if (count($errors) == 0) {
             $plant->save();
             Redirect::to('/care/' . $plant->id, array('message' => 'Kasvi tallennettu!'));
         } else {
-            View::make('ownplant/add_own_plant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('ownplant/add_own_plant.html', array('errors' => $errors, 'attributes' => $attributes, 'plants' => $plants));
         }
     }
 
     public static function update($id) {
         self::check_logged_in();
         $params = $_POST;
+        if (isset($_POST['status'])) {
+            $params += array('status' => 'kuollut');
+        } else {
+            $params += array('status' => 'elossa');
+        }
 
         $attributes = array(
+            'id' => $id,
+            'plant_id' => $params['plant_id'],
+            'status' => $params['status'],
             'tradename' => $params['tradename'],
             'latin_name' => $params['latin_name'],
             'acquisition' => $params['acquisition'],
@@ -76,14 +103,16 @@ class OwnPlantController extends BaseController {
             'fertilizing' => $params['fertilizing'],
             'details' => $params['details']
         );
+//        Kint::dump($params);
 
-        $plant = new OwnedPlant($attributes);
-        $errors = $plant->errors();
+        $owned_plant = new OwnedPlant($attributes);
+//        Kint::dump($owned_plant->details);
+        $errors = $owned_plant->errors();
 
         if (count($errors) > 0) {
             View::make('ownplant/edit_ownplant.html', array('errors' => $errors, 'attributes' => $attributes));
         } else {
-            $plant->update();
+            $owned_plant->update();
             Redirect::to('/care/' . $id, array('message' => 'Kasvia on muokattu onnistuneesti!'));
         }
     }

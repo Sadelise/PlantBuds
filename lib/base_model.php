@@ -30,13 +30,13 @@ class BaseModel {
         return $errors;
     }
 
-    public function validate_string_length($string, $length) {
+    public function validate_string_length($string, $length, $name) {
         $errors = array();
         if ($string == '' || $string == null) {
-            $errors[] = 'Kenttä ei saa olla tyhjä!';
+            $errors[] = $name . ' ei saa olla tyhjä.';
         }
         if (strlen($string) < $length) {
-            $errors[] = 'Pituuden tulee olla vähintään ' . $length . ' merkkiä!';
+            $errors[] = $name . '-kentän pituuden tulee olla vähintään ' . $length . ' merkkiä.';
         }
 
         return $errors;

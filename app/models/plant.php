@@ -13,7 +13,8 @@ class Plant extends BaseModel {
         $query_string = 'SELECT * FROM Plant';
         $loptions = array();
         if (isset($options['search'])) {
-            $query_string .= ' WHERE LOWER(tradename) LIKE LOWER(:like)';
+            $query_string .= ' WHERE LOWER(tradename) LIKE LOWER(:like) '
+                    . 'OR LOWER(latin_name) LIKE LOWER(:like)';
             $loptions['like'] = '%' . $options['search'] . '%';
         }
         $query = DB::connection()->prepare($query_string);
@@ -31,7 +32,7 @@ class Plant extends BaseModel {
     }
 
     public static function find($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Plant WHERE id = :id LIMIT 1');
+        $query = DB::connection()->prepare('SELECT *, to_char(edited, \'DD.MM.YYYY\') FROM Plant WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
 
@@ -43,7 +44,7 @@ class Plant extends BaseModel {
                 'light' => $row['light'],
                 'water' => $row['water'],
                 'description' => $row['description'],
-                'edited' => $row['edited']
+                'edited' => $row['to_char']
             ));
 
             return $plant;
@@ -53,7 +54,7 @@ class Plant extends BaseModel {
     }
 
     public static function findByName($tradename) {
-        $query = DB::connection()->prepare('SELECT * FROM Plant WHERE tradename = :tradename LIMIT 1');
+        $query = DB::connection()->prepare('SELECT *, to_char(edited, \'DD.MM.YYYY\')  FROM Plant WHERE tradename = :tradename LIMIT 1');
         $query->execute(array('tradename' => $tradename));
         $row = $query->fetch();
 
@@ -65,7 +66,7 @@ class Plant extends BaseModel {
                 'light' => $row['light'],
                 'water' => $row['water'],
                 'description' => $row['description'],
-                'edited' => $row['edited']
+                'edited' => $row['to_char']
             ));
 
             return $plant;
@@ -88,12 +89,12 @@ class Plant extends BaseModel {
 
     public function update() {
         $query = DB::connection()->prepare('UPDATE Plant SET tradename = :tradename, latin_name = :latin_name, light = :light, water = :water, description = :description, edited = NOW() WHERE id = :id');
-        $query->execute(array('tradename' => $this->tradename,
+        $query->execute(array('id' => $this->id,
+            'tradename' => $this->tradename,
             'latin_name' => $this->latin_name,
             'water' => $this->water,
             'light' => $this->light,
             'description' => $this->description,
-            'id' => $this->id
         ));
     }
 
@@ -105,7 +106,7 @@ class Plant extends BaseModel {
     }
 
     public function validate_tradename() {
-        return $this->validate_string_length($this->tradename, 3);
+        return $this->validate_string_length($this->tradename, 3, 'Nimi');
     }
 
 }

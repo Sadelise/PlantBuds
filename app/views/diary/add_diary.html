@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää päiväkirjamerkintä liittyen kasviin {{plant.tradename}}</h1>
+<h1>Lisää päiväkirjamerkintä liittyen kasviin {{tradename}}</h1>
 
 {% if errors %}
 <div class="alert alert-danger">
@@ -12,16 +12,17 @@
 </div>
 {% endif %}
 
-<form method="post" action="{{base_path}}/newDiary/{{plant.tradename}}/{{ownplant_id}}">
+<form method="post" action="{{base_path}}/newDiary/{{tradename}}">
     <div class="form-group">
         <label>Otsikko</label>
-        <input name="title" class="form-control" value="" type="text">
+        <input name="title" class="form-control" value="{{diary.title}}" type="text">
     </div>
     <div class="form-group">
         <label>Merkintä</label>
-        <textarea name="post" class="form-control"> 
-
-        </textarea>
+        <textarea name="post" class="form-control">{{diary.post}}</textarea>
+    </div>
+    <div>
+        <input name="owned_id" value="{{owned_id}}" type="hidden">
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Tallenna</button>

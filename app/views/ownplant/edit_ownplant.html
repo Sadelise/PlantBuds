@@ -13,6 +13,9 @@
 {% endif %}
 
 <form method="post" action="{{base_path}}/edit_o/{{plant.id}}">
+    <div class="form-group">
+        <input name="plant_id" value="{{plant.plant_id}}" type="hidden">
+    </div>
     <div class="checkbox">
         <label>
             <input name="status" type="checkbox">
@@ -82,7 +85,7 @@
         </div>
         <div class="form-group">
             <label>Lisätiedot</label>
-            <textarea name="details" class="form-control">{{plant.description}}</textarea>
+            <textarea name="details" class="form-control">{{plant.details}}</textarea>
         </div>
         <div class="form-group">
             <input name="tradename" value="{{plant.tradename}}" type="hidden">

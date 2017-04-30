@@ -2,7 +2,7 @@
 
 class Diary extends BaseModel {
 
-    public $id, $grower_id, $title, $owned_id, $posted, $post, $tradename;
+    public $id, $grower_id, $title, $owned_id, $posted, $post;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -10,7 +10,7 @@ class Diary extends BaseModel {
     }
     
         public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Diary');
+        $query = DB::connection()->prepare('SELECT *, to_char(posted, \'DD.MM.YYYY\') FROM Diary');
         $query->execute();
         $rows = $query->fetchAll();
         $diary = array();
@@ -21,7 +21,7 @@ class Diary extends BaseModel {
                 'grower_id' => $row['grower_id'],
                 'owned_id' => $row['owned_id'],
                 'title' => $row['title'],
-                'posted' => $row['posted'],
+                'posted' => $row['to_char'],
                 'post' => $row['post'],
             ));
         }
@@ -30,30 +30,34 @@ class Diary extends BaseModel {
     }
 
     public static function allByOwnedPlantId($owned_plant_id) {
-        $query = DB::connection()->prepare('SELECT * FROM Diary LEFT JOIN Owned_Plant ON Diary.owned_id = Owned_Plant.id LEFT JOIN Plant ON Owned_Plant.plant_id = Plant.id WHERE Diary.owned_id = :id AND Diary.grower_id = :grower_id');
+        $query = DB::connection()->prepare(''
+                . 'SELECT to_char(posted, \'DD.MM.YYYY\'), Diary.id AS id, Diary.grower_id, Diary.owned_id, title, posted, post, Owned_plant.plant_id '
+                . 'FROM Diary LEFT JOIN Owned_Plant ON Diary.owned_id = Owned_Plant.id '
+                . 'LEFT JOIN Plant ON Owned_Plant.plant_id = Plant.id '
+                . 'WHERE Diary.owned_id = :id AND Diary.grower_id = :grower_id');
         $query->execute(array('id' => $owned_plant_id,
             'grower_id' => $_SESSION['user']
         ));
+        
         $rows = $query->fetchAll();
         $diary = array();
-
+        
         foreach ($rows as $row) {
             $diary[] = new Diary(array(
                 'id' => $row['id'],
                 'grower_id' => $row['grower_id'],
                 'owned_id' => $row['owned_id'],
                 'title' => $row['title'],
-                'posted' => $row['posted'],
+                'posted' => $row['to_char'],
                 'post' => $row['post'],
-                'tradename' => $row['tradename']
+                'plant_id' => $row['plant_id']
             ));
         }
-
         return $diary;
     }
 
     public static function find($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Diary WHERE id = :id LIMIT 1');
+        $query = DB::connection()->prepare('SELECT *, to_char(posted, \'DD.MM.YYYY\') FROM Diary WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
 
@@ -63,7 +67,7 @@ class Diary extends BaseModel {
                 'grower_id' => $row['grower_id'],
                 'owned_id' => $row['owned_id'],
                 'title' => $row['title'],
-                'posted' => $row['posted'],
+                'posted' => $row['to_char'],
                 'post' => $row['post']
             ));
 
@@ -85,10 +89,8 @@ class Diary extends BaseModel {
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE Diary SET grower_id = :grower_id, owned_id = :owned_id, title = :title, posted = NOW(), post = :post WHERE id = :id');
+        $query = DB::connection()->prepare('UPDATE Diary SET title = :title, post = :post WHERE id = :id');
         $query->execute(array('id' => $this->id,
-            'grower_id' => $_SESSION['user'],
-            'owned_id' => $this->owned_id,
             'title' => $this->title,
             'post' => $this->post
         ));
@@ -102,11 +104,11 @@ class Diary extends BaseModel {
     }
 
     public function validate_title() {
-        return $this->validate_string_length($this->title, 3);
+        return $this->validate_string_length($this->title, 3, 'Otsikko');
     }
 
     public function validate_post() {
-        return $this->validate_string_length($this->post, 5);
+        return $this->validate_string_length($this->post, 5, 'Viesti');
     }
 
 }

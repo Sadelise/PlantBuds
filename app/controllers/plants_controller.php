@@ -17,25 +17,26 @@ class PlantController extends BaseController {
 //        Kint::dump($options);
     }
 
-//        $plants = Plant::all();
-//        View::make('plant/list_plant.html', array('plants' => $plants));
-//    }
-
     public static function show($id) {
         $plant = Plant::find($id);
-        View::make('plant/plantdescription.html', array('plant' => $plant));
+        $writers = Writer::findAllByPlant($id);
+        View::make('plant/plantdescription.html', array('writers' => $writers, 'plant' => $plant));
+//      Kint::dump($writers);
     }
 
     public static function edit($id) {
+        self::check_logged_in();
         $plant = Plant::find($id);
         View::make('plant/edit_plant.html', array('plant' => $plant));
     }
 
     public static function newPlant() {
+        self::check_logged_in();
         View::make('plant/add_plant.html');
     }
 
     public static function store() {
+        self::check_logged_in();
         $params = $_POST;
         $attributes = array(
             'tradename' => $params['tradename'],
@@ -57,6 +58,7 @@ class PlantController extends BaseController {
     }
 
     public static function update($id) {
+        self::check_logged_in();
         $params = $_POST;
 
         $attributes = array(
@@ -75,12 +77,14 @@ class PlantController extends BaseController {
             View::make('plant/edit_plant.html', array('errors' => $errors, 'attributes' => $attributes));
         } else {
             $plant->update();
+            Writer::add($id);
 
-            Redirect::to('/description/' . $plant->id, array('message' => 'Kasvia on muokattu onnistuneesti!'));
+            Redirect::to('/description/' . $plant->id, array('message' => 'Kuvausta on muokattu onnistuneesti!'));
         }
     }
 
     public static function destroy($id) {
+        self::check_logged_in();
         $plant = new Plant(array('id' => $id));
         $plant->destroy();
         Redirect::to('/list_p', array('message' => 'Kasvi on poistettu onnistuneesti!'));

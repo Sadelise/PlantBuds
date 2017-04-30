@@ -12,8 +12,12 @@ $routes->get('/frontpage', function() {
 HelloWorldController::frontpage();
 });
 
-$routes->get('/edit_diary', function() {
-HelloWorldController::edit_diary();
+$routes->post('/edit_diary/:post_id', function($post_id) {
+    DiaryController::update($post_id);
+});
+
+$routes->get('/edit_diary/:post_id', function($post_id) {
+    DiaryController::edit($post_id);
 });
 
 $routes->get('/list_p', function() {
@@ -48,12 +52,12 @@ $routes->post('/edit_p/:id', function($id) {
 PlantController::update($id);
 });
 
-$routes->get('/edit_o/:id', function($id) {
-OwnPlantController::edit($id);
-});
-
 $routes->post('/edit_o/:id', function($id) {
 OwnPlantController::update($id);
+});
+
+$routes->get('/edit_o/:id', function($id) {
+OwnPlantController::edit($id);
 });
 
 $routes->get('/list_o', function() {
@@ -68,16 +72,16 @@ $routes->get('/addDiary/:tradename/:id', function($tradename, $id) {
 DiaryController::newDiary($tradename, $id);
 });
 
-$routes->get('/diarylist/:id', function($id) {
-DiaryController::index($id);
+$routes->get('/diarylist/:owned_id', function($owned_id) {
+DiaryController::index($owned_id);
 });
 
-$routes->get('/diarypost/:id/:owned_id', function($id, $owned_id) {
-DiaryController::show($id, $owned_id);
+$routes->get('/diarypost/:post_id/:owned_id', function($post_id, $owned_id) {
+DiaryController::show($post_id, $owned_id);
 });
 
-$routes->post('/newDiary/:tradename/:id', function($tradename, $id) {
-DiaryController::store($tradename, $id);
+$routes->post('/newDiary/:tradename', function($tradename) {
+DiaryController::store($tradename);
 });
 
 $routes->post('/diary/:id/destroy/:owned_id', function($id, $owned_id) {

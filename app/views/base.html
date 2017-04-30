@@ -21,46 +21,48 @@
     </head>
 
     <body>
-        <div class="topnav" id="myTopnav">
-            <a href="{{base_path}}">PlantBuds</a>
-            <a href="{{base_path}}/list_p">Selaa kasveja</a>
-            <a href="{{base_path}}/list_o">Omat sivut</a>
-            (% if user_logged_in %)
-            <form class="navbar-form navbar-right" method="post" action="{{base_path}}/logout">
-                <button type="submit" class="btn btn-default">Kirjaudu ulos</button>
-            </form>
-            (% else %)
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{base_path}}/login">Kirjaudu sisään</a></li>
-            </ul>
-            (% endif %)
-        </div>
-        <!--        <nav class="navbar navbar-default" role="navigation">
-                    <div class="container-fluid">
-        
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                             Sovelluksen nimi 
-                            <a class="navbar-brand" href="{{base_path}}">PlantBuds</a>
+
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand" id="navtitle" href="{{base_path}}">PlantBuds</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{base_path}}">Etusivu</a></li>
+                        <li><a href="{{base_path}}/list_p">Selaa kasveja</a></li>
+                        {% if user_logged_in %}
+                        <li><a href="{{base_path}}/list_o">Omat sivut</a></li>
+                        {% endif %}
+                        {% if user_logged_in %}
+                        <div class="navbar-right" id="sign">
+                            <form class="navbar-form navbar-right" method="post" action="{{base_path}}/logout">
+                                <button type="submit" class="btn btn-default" id="signout">Kirjaudu ulos</button>
+                            </form>
                         </div>
-        
-                        <div class="collapse navbar-collapse" id="navigation">
-                            <ul class="nav navbar-nav">
-                                 Navigaation linkit 
-                                <li><a href="{{base_path}}">Etusivu</a></li>
-                                <li><a href="{{base_path}}/list_p">Selaa kasveja</a></li>
-                                <li><a href="{{base_path}}/login">Kirjaudu</a></li>
-                                <li><a href="{{base_path}}">Rekisteröidy</a></li>
-        
+                        {% else %}
+                        <div class="navbar-right" id="sign">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{{base_path}}/login">Kirjaudu sisään</a></li>
                             </ul>
                         </div>
-                    </div>
-                </nav>-->
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <div id="main-container">
             <!-- Dynaaminen sisältö tulee tähän -->

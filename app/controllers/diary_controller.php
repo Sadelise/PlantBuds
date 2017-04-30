@@ -2,50 +2,48 @@
 
 class DiaryController extends BaseController {
 
-    public static function index($id) {
+    public static function index($owned_id) {
         self::check_logged_in();
-        $diary = Diary::allByOwnedPlantId($id);
+        $diary = Diary::allByOwnedPlantId($owned_id);
         $tradename = '';
         $plant_id = '';
-        $ownplant_id = '';
-        $ownplant = OwnedPlant::find($id);
+        $ownplant = OwnedPlant::find($owned_id);
         if ($ownplant != null) {
             $plant_id = $ownplant->plant_id;
+            $tradename = $ownplant->tradename;
             $plant = Plant::find($plant_id);
-            if ($plant != null) {
-                $tradename = $plant->tradename;
-            }
         }
-
-        View::make('diary/diarylist.html', array('diary' => $diary, 'tradename' => $tradename, 'id' => $ownplant->id));
+ 
+        View::make('diary/diarylist.html', array('diary' => $diary, 'tradename' => $tradename, 'ownplant_id' => $ownplant->id));
     }
 
-    public static function show($id, $owned_id) {
+    public static function show($post_id, $owned_id) {
         self::check_logged_in();
-        $diary = Diary::find($id);
-        View::make('diary/diarypost.html', array('diary' => $diary, '$owned_id' => $owned_id));
+        $diary = Diary::find($post_id);
+        View::make('diary/diarypost.html', array('diary' => $diary, 'owned_id' => $owned_id));
     }
 
-    public static function edit($id) {
+    public static function edit($post_id) {
         self::check_logged_in();
-        $diary = Diary::find($id);
+        $diary = Diary::find($post_id);
+//        Kint::dump($diary);
         View::make('diary/edit_diary.html', array('diary' => $diary));
     }
 
     public static function newDiary($tradename, $ownplant_id) {
         self::check_logged_in();
         $plant = Plant::findByName($tradename);
-        View::make('diary/add_diary.html', array('plant' => $plant, 'ownplant_id' => $ownplant_id));
+        View::make('diary/add_diary.html', array('tradename' => $plant->tradename, 'ownplant_id' => $ownplant_id, 'owned_id' => $ownplant_id));
     }
 
-    public static function store($tradename, $ownplant_id) {
+    public static function store($tradename) {
         self::check_logged_in();
         $params = $_POST;
         $attributes = array(
             'title' => $params['title'],
-            'owned_id' => $ownplant_id,
             'posted' => 'NOW()',
-            'post' => $params['post']
+            'post' => $params['post'],
+            'owned_id' => $params['owned_id']
         );
 
         $diary = new Diary($attributes);
@@ -53,32 +51,31 @@ class DiaryController extends BaseController {
 
         if (count($errors) == 0) {
             $diary->save();
-            Redirect::to('/diarypost/' . $diary->id, array('message' => 'Päiväkirjamerkintä tallennettu!'));
+            Redirect::to('/diarypost/' . $diary->id . '/' . $params['owned_id'], array('message' => 'Päiväkirjamerkintä tallennettu!'));
         } else {
-            View::make('diary/add_diary.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('diary/add_diary.html', array('errors' => $errors, 'diary' => $diary, 'tradename' => $tradename, 'owned_id' => $diary->owned_id));
         }
     }
 
-    public static function update($id) {
+    public static function update($diary_id) {
         self::check_logged_in();
         $params = $_POST;
 
         $attributes = array(
-            'id' => $id,
+            'id' => $diary_id,
             'title' => $params['title'],
-            'owned_id' => $params['owned_id'],
-            'posted' => $params['posted'],
-            'post' => $params['post']
+            'post' => $params['post'],
+            'owned_id' => $params['owned_id']
         );
 
         $diary = new Diary($attributes);
         $errors = $diary->errors();
 
         if (count($errors) > 0) {
-            View::make('diary/edit_diary.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('diary/edit_diary.html', array('errors' => $errors, 'diary' => $diary));
         } else {
             $diary->update();
-            Redirect::to('/diarypost/' . $diary->id, array('message' => 'Merkintää on muokattu onnistuneesti!'));
+            Redirect::to('/diarypost/' . $diary->id . '/' . $params['owned_id'], array('message' => 'Merkintää on muokattu onnistuneesti!'));
         }
     }
 

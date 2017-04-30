@@ -12,16 +12,17 @@
 </div>
 {% endif %}
 
-<form>
+<form method="post" action="{{base_path}}/edit_diary/{{diary.id}}">
     <div class="form-group">
         <label>Otsikko</label>
-        <input class="form-control" value="Yucca elephantipes" type="text">
+        <input class="form-control" name="title" value="{{diary.title}}" type="text">
     </div>
     <div class="form-group">
         <label>Merkintä</label>
-        <textarea class="form-control"> 
-Uusi lehti!
-        </textarea>
+        <textarea class="form-control" name="post">{{diary.post}}</textarea>
+    </div>
+    <div>
+         <input name="owned_id" value="{{diary.owned_id}}" type="hidden">
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Tallenna</button>

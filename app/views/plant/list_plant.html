@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
+{% if errors %}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{% endif %}
+
 <h1>Kaikki kasvit</h1>
 
+{% if user_logged_in %}
 <p>
     <a href="{{base_path}}/addPlant" class="btn btn-success">Lisää kasvi</a>
 </p>
+{% endif %}
 
 <form method="get" action="" class="form-inline">
     <div class="form group">

@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 {% import "macros/forms.html" as forms %}
+{% if message %}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{% endif %}
+
 <h1>{{plant.tradename}}</h1>
 <!-- Painikkeet tähän -->
 <p>

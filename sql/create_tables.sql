@@ -15,8 +15,9 @@ CREATE TABLE Plant(
 );
 
 CREATE TABLE Writer(
-  grower_id INTEGER REFERENCES Grower(id) ON DELETE CASCADE,
-  plant_id INTEGER REFERENCES Plant(id) ON DELETE CASCADE
+  PRIMARY KEY (grower_id, plant_id),
+  grower_id INTEGER REFERENCES Grower(id) ON UPDATE CASCADE,
+  plant_id INTEGER REFERENCES Plant(id) ON UPDATE CASCADE
 );
 
 CREATE TABLE Owned_Plant(

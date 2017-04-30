@@ -10,7 +10,7 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function all($options) {
-        $query_string = 'SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id';
+        $query_string = 'SELECT *, to_char(acquisition, \'DD.MM.YYYY\') AS acquisition, to_char(added, \'DD.MM.YYYY\') AS added FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id';
         $loptions['grower_id'] = $options['grower_id'];
         if (isset($options['search'])) {
             $query_string .= ' AND LOWER(Plant.tradename) LIKE LOWER(:like)';
@@ -33,7 +33,7 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function allByPlantId($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Owned_Plant WHERE plant_id = :plant_id');
+        $query = DB::connection()->prepare('SELECT *, to_char(acquisition, \'DD.MM.YYYY\') AS ac_date, to_char(added, \'DD.MM.YYYY\') AS ad_date  FROM Owned_Plant WHERE plant_id = :plant_id');
         $query->execute(array('plant_id' => $id));
         $rows = $query->fetchAll();
         $plants = array();
@@ -43,7 +43,7 @@ class OwnedPlant extends BaseModel {
                 'id' => $row['id'],
                 'grower_id' => $row['grower_id'],
                 'plant_id' => $row['plant_id'],
-                'acquisition' => $row['acquisition'],
+                'acquisition' => $row['ac_date'],
                 'status' => $row['status'],
                 'location' => $row['location'],
                 'distance_window' => $row['distance_window'],
@@ -52,7 +52,7 @@ class OwnedPlant extends BaseModel {
                 'watering' => $row['watering'],
                 'fertilizing' => $row['fertilizing'],
                 'details' => $row['details'],
-                'added' => $row['added'],
+                'added' => $row['ad_date'],
             ));
         }
 
@@ -60,7 +60,7 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function find($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.id = :owned_id AND Owned_Plant.grower_id = :grower_id LIMIT 1 ');
+        $query = DB::connection()->prepare('SELECT *, to_char(acquisition, \'DD.MM.YYYY\') AS ac_date, to_char(added, \'DD.MM.YYYY\') AS ad_date FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.id = :owned_id AND Owned_Plant.grower_id = :grower_id LIMIT 1 ');
         $query->execute(array('owned_id' => $id,
             'grower_id' => $_SESSION['user']));
         $row = $query->fetch();
@@ -72,7 +72,7 @@ class OwnedPlant extends BaseModel {
                 'latin_name' => $row['latin_name'],
                 'grower_id' => $row['grower_id'],
                 'plant_id' => $row['plant_id'],
-                'acquisition' => $row['acquisition'],
+                'acquisition' => $row['ac_date'],
                 'status' => $row['status'],
                 'location' => $row['location'],
                 'distance_window' => $row['distance_window'],
@@ -81,7 +81,7 @@ class OwnedPlant extends BaseModel {
                 'watering' => $row['watering'],
                 'fertilizing' => $row['fertilizing'],
                 'details' => $row['details'],
-                'added' => $row['added']
+                'added' => $row['ad_date']
             ));
 
             return $plant;
@@ -91,7 +91,7 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function findByTradeName($tradename) {
-        $query = DB::connection()->prepare('SELECT * FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Plant.tradename = :tradename LIMIT 1');
+        $query = DB::connection()->prepare('SELECT *, to_char(acquisition, \'DD.MM.YYYY\') AS ac_date, to_char(added, \'DD.MM.YYYY\') AS ad_date FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Plant.tradename = :tradename LIMIT 1');
         $query->execute(array('tradename' => $tradename));
         $row = $query->fetch();
 
@@ -102,7 +102,7 @@ class OwnedPlant extends BaseModel {
                 'latin_name' => $row['latin_name'],
                 'grower_id' => $row['grower_id'],
                 'plant_id' => $row['plant_id'],
-                'acquisition' => $row['acquisition'],
+                'acquisition' => $row['ac_date'],
                 'status' => $row['status'],
                 'location' => $row['location'],
                 'distance_window' => $row['distance_window'],
@@ -111,7 +111,7 @@ class OwnedPlant extends BaseModel {
                 'watering' => $row['watering'],
                 'fertilizing' => $row['fertilizing'],
                 'details' => $row['details'],
-                'added' => $row['added']
+                'added' => $row['ad_date']
             ));
 
             return $plant;
@@ -175,7 +175,7 @@ class OwnedPlant extends BaseModel {
     }
 
     public function validate_tradename() {
-        return $this->validate_string_length($this->tradename, 3);
+        return $this->validate_string_length($this->tradename, 3, 'Jokin muu, mikä');
     }
 
     public function validate_acuisition_date() {

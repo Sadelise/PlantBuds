@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 {% import "macros/forms.html" as forms %}
+{% if message %}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{% endif %}
+
 <h1>{{diary.title}}</h1>
 <h2>{{diary.posted}}</h2>
 
@@ -9,6 +15,6 @@
 </p>
 
 <p>
-    {{forms.destroy_button("#{base_path}/diary/#{diary.id}/destroy/#{owned_id}")}} <a href="/PlantBuds/edit_diary" class="btn btn-default">Muokkaa</a>
+    {{forms.destroy_button("#{base_path}/diary/#{diary.id}/destroy/#{owned_id}")}} <a href="/PlantBuds/edit_diary/{{diary.id}}" class="btn btn-default">Muokkaa</a>
 </p>
 {% endblock %}
