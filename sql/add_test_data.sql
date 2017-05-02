@@ -10,9 +10,11 @@ CREATE VIEW Jukan_id AS (SELECT id FROM Plant Where tradename = 'Jukkapalmu' LIM
 CREATE VIEW Kasvattajan_id AS (SELECT id FROM Grower Where username = 'Tiina' LIMIT 1);
 CREATE VIEW Pertin_id AS (SELECT id FROM Grower Where username = 'Pertti' LIMIT 1);
 CREATE VIEW Vieraan_id AS (SELECT id FROM Grower Where username = 'Vieras' LIMIT 1);
+CREATE VIEW limon_id AS (SELECT id FROM Plant Where tradename = 'Limoviikuna' LIMIT 1);
 
 INSERT INTO Writer (grower_id, plant_id) VALUES ((SELECT * FROM Kasvattajan_id), (SELECT * FROM jukan_id));
 INSERT INTO Writer (grower_id, plant_id) VALUES ((SELECT * FROM Pertin_id), (SELECT * FROM jukan_id));
+INSERT INTO Writer (grower_id, plant_id) VALUES ((SELECT * FROM Pertin_id), (SELECT * FROM limon_id));
 INSERT INTO Writer (grower_id, plant_id) VALUES ((SELECT * FROM Kasvattajan_id), (SELECT id FROM Plant Where tradename = 'Liekkipuu' LIMIT 1));
 
 INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES ((SELECT * FROM Kasvattajan_id), (SELECT * FROM Jukan_id), '2003-03-21', 'elossa', 'Pohjoisikkuna', 0.5, 'kaupallinen', 'kekkilä', 'kerran viikossa', 'kerran kuukaudessa', 'Pistokkaasta kasvatettu. Tiinan kasvi.', NOW() );
@@ -21,6 +23,8 @@ INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, dis
 INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES ((SELECT * FROM Pertin_id), 3, '05.12.2007', 'elossa', 'Eteläikkuna', 1.0, 'kaupallinen', 'kekkilä', 'kerran kuukaudessa', 'kerran kahdessa viikossa', 'Raision kukkatalosta ostettu. Pertin kasvi.', NOW() );
 INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES ((SELECT * FROM Vieraan_id), 2, '05.12.2007', 'elossa', 'Eteläikkuna', 1.0, 'kaupallinen', 'kekkilä', 'kerran kuukaudessa', 'kerran kahdessa viikossa', 'Raision kukkatalosta ostettu.', NOW() );
 INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES ((SELECT * FROM Vieraan_id), (SELECT * FROM Jukan_id), '2003-03-21', 'elossa', 'Pohjoisikkuna', 0.5, 'kaupallinen', 'kekkilä', 'kerran viikossa', 'kerran kuukaudessa', 'Pistokkaasta kasvatettu', NOW() );
+INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES ((SELECT * FROM Vieraan_id), 3, '05.12.2007', 'kuollut', 'Eteläikkuna', 1.0, 'kaupallinen', 'kekkilä', 'kerran kuukaudessa', 'kerran kahdessa viikossa', 'Raision kukkatalosta ostettu.', NOW() );
+INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES ((SELECT * FROM Vieraan_id), 3, '05.12.2007', 'kuollut', 'Eteläikkuna', 1.0, 'kaupallinen', 'kekkilä', 'kerran kuukaudessa', 'kerran kahdessa viikossa', 'Raision kukkatalosta ostettu.', NOW() );
 INSERT INTO Owned_Plant (grower_id, plant_id, acquisition, status, location, distance_window, soil, soil_description, watering, fertilizing, details, added) VALUES ((SELECT * FROM Vieraan_id), 3, '05.12.2007', 'kuollut', 'Eteläikkuna', 1.0, 'kaupallinen', 'kekkilä', 'kerran kuukaudessa', 'kerran kahdessa viikossa', 'Raision kukkatalosta ostettu.', NOW() );
 
 CREATE VIEW OP_id AS (SELECT id FROM Owned_Plant WHERE plant_id = (SELECT * FROM Jukan_id) LIMIT 1);
