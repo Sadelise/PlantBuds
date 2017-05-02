@@ -29,7 +29,8 @@ Järjestelmän tarkoitus on tarjota käyttäjälle tietoa erilaisista kasveista 
 
 Toimintoja:
 
-    Kasvien tietojen selailu, lisääminen ja muokkaus, eri käyttäjät voivat muokata samaa        kuvausta ja yksi käyttäjä voi muokata useampia kuvauksia.
+    Kasvien tietojen selailu, lisääminen ja muokkaus.
+    Eri käyttäjät voivat muokata samaa kuvausta ja yksi käyttäjä voi muokata useampia kuvauksia.
     Kasvien (sekä yleisten, että omien) hakeminen suomenkielisillä ja tieteellisillä nimillä
     Käyttäjän kirjautuminen
     Kasvin lisääminen omiin kasveihin
