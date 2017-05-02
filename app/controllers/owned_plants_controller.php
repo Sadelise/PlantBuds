@@ -83,9 +83,9 @@ class OwnPlantController extends BaseController {
         self::check_logged_in();
         $params = $_POST;
         if (isset($_POST['status'])) {
-            $params += array('status' => 'kuollut');
+            $params['status'] = 'kuollut';
         } else {
-            $params += array('status' => 'elossa');
+            $params['status'] = 'elossa';
         }
 
         $attributes = array(

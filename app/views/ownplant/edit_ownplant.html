@@ -18,8 +18,8 @@
     </div>
     <div class="checkbox">
         <label>
-            <input name="status" type="checkbox">
-            Kuollut
+            <input name="status" type="checkbox" {% if plant.status == 'kuollut' %} checked {% endif %}>
+                   Kuollut
         </label>
     </div>
     <div class="form-group">
@@ -29,54 +29,54 @@
         </div>
         <div class="form-group">
             <label>Sijainti</label>
-            <select name="location">
-                <option>Eteläikkuna</option>
-                <option>Pohjoisikkuna </option>
-                <option>Länsi-ikkuna</option>
-                <option>Itäikkuna</option>
+            <select name="location" class="form-control" id="dropdown">
+                <option {% if (plant.location == 'Eteläikkuna') %} selected {% endif %}>Eteläikkuna</option>
+                <option {% if (plant.location == 'Pohjoisikkuna') %} selected {% endif %}>Pohjoisikkuna</option>
+                <option {% if (plant.location == 'Länsi-ikkuna') %} selected {% endif %}>Länsi-ikkuna</option>
+                <option {% if (plant.location == 'Itäikkuna') %} selected {% endif %}>Itäikkuna</option>
             </select>  
         </div>
         <div class="form-group">
             <label>Etäisyys ikkunasta</label>
-            <select name="distance_window">
-                <option>0.0</option>
-                <option>0.5</option>
-                <option>1.0</option>
-                <option>1.5</option>
-                <option>2.0</option>
-                <option>2.5</option>
-                <option>3.0</option>
-                <option>3.5</option>
-                <option>4.0</option>
-                <option>4.5</option>
-                <option>5.0</option>
+            <select name="distance_window" class="form-control" id="dropdown">
+                <option {% if (plant.distance_window == 0.0) %} selected {% endif %}>0.0</option>
+                <option {% if (plant.distance_window == 0.5) %} selected {% endif %}>0.5</option>
+                <option {% if (plant.distance_window == 1.0) %} selected {% endif %}>1.0</option>
+                <option {% if (plant.distance_window == 1.5) %} selected {% endif %}>1.5</option>
+                <option {% if (plant.distance_window == 2.0) %} selected {% endif %}>2.0</option>
+                <option {% if (plant.distance_window == 2.5) %} selected {% endif %}>2.5</option>
+                <option {% if (plant.distance_window == 3.0) %} selected {% endif %}>3.0</option>
+                <option {% if (plant.distance_window == 3.5) %} selected {% endif %}>3.5</option>
+                <option {% if (plant.distance_window == 4.0) %} selected {% endif %}>4.0</option>
+                <option {% if (plant.distance_window == 4.5) %} selected {% endif %}>4.5</option>
+                <option {% if (plant.distance_window == 5.0) %} selected {% endif %}>5.0</option>
             </select>  
         </div>
         <div class="form-group">
             <label>Kastelu</label>
-            <select name="watering">
-                <option>Kerran päivässä</option>
-                <option>Joka toinen päivä</option>
-                <option>Kerran viikossa</option>
-                <option>Joka toinen viikko</option>
-                <option>Kerran kuussa</option>
+            <select name="watering" class="form-control" id="dropdown">
+                <option {% if (plant.watering == 'Kerran päivässä') %} selected {% endif %}>Kerran päivässä</option>
+                <option {% if (plant.watering == 'Joka toinen päivä') %} selected {% endif %}>Joka toinen päivä</option>
+                <option {% if (plant.watering == 'Kerran viikossa') %} selected {% endif %}>Kerran viikossa</option>
+                <option {% if (plant.watering == 'Joka toinen viikko') %} selected {% endif %}>Joka toinen viikko</option>
+                <option {% if (plant.watering == 'Kerran kuussa') %} selected {% endif %}>Kerran kuussa</option>
             </select>  
         </div>
         <div class="form-group">
             <label>Lannoitus</label>
-            <select name="fertilizing">
-                <option>Kerran viikossa</option>
-                <option>Joka toinen viikko</option>
-                <option>Kerran kuukaudessa</option>
-                <option>Kerran kahdessa kuukaudessa</option>
-                <option>Harvemmin</option>
+            <select name="fertilizing" class="form-control" id="dropdown">
+                <option {% if (plant.fertilizing == 'Kerran viikossa') %} selected {% endif %}>Kerran viikossa</option>
+                <option {% if (plant.fertilizing == 'Joka toinen viikko') %} selected {% endif %}>Joka toinen viikko</option>
+                <option {% if (plant.fertilizing == 'Kerran kuukaudessa') %} selected {% endif %}>Kerran kuukaudessa</option>
+                <option {% if (plant.fertilizing == 'Kerran kahdessa kuukaudessa') %} selected {% endif %}>Kerran kahdessa kuukaudessa</option>
+                <option {% if (plant.fertilizing == 'Harvemmin') %} selected {% endif %}>Harvemmin</option>
             </select>  
         </div>
         <div class="form-group">
             <label>Kasvualusta</label>
-            <select name="soil">
-                <option>Kaupallinen multa</option>
-                <option>Oma sekoitus</option>
+            <select name="soil" class="form-control" id="dropdown">
+                <option {% if (plant.soil == 'Kaupallinen multa') %} selected {% endif %}>Kaupallinen multa</option>
+                <option{% if (plant.soil == 'Oma sekoitus') %} selected {% endif %}>Oma sekoitus</option>
             </select>  
         </div>
         <div class="form-group">
