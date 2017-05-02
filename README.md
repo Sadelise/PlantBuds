@@ -17,6 +17,9 @@ Linkit eri sivuille:
 * [Omien kasvien listaus, vaatii kirjautumisen](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_o)
 * [Oman kasvin esittelysivu, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/care/5)
 * [Oman kasvin muokkaussivu, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/edit_o/5)
+* [Päiväkirjamerkintöjen listaus](http://sharhio.users.cs.helsinki.fi/PlantBuds/diarylist/5)
+* [Päiväkirjamerkinnän sivu](http://sharhio.users.cs.helsinki.fi/PlantBuds/diarypost/2/5)
+* [Päiväkirjamerkinnän editointi](http://sharhio.users.cs.helsinki.fi/PlantBuds/edit_diary/2)
 * [Kirjautumissivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/login)
 
 ## Työn aihe
@@ -26,9 +29,10 @@ Järjestelmän tarkoitus on tarjota käyttäjälle tietoa erilaisista kasveista 
 
 Toimintoja:
 
-    Kasvien tietojen lisääminen, muokkaus ja poisto
-    Kasvien hakeminen eri hakukriteereillä
-    Käyttäjän rekisteröityminen
-    Ylläpitäjän ja käyttäjän kirjautuminen
+    Kasvien tietojen selailu, lisääminen ja muokkaus, eri käyttäjät voivat muokata samaa        kuvausta ja yksi käyttäjä voi muokata useampia kuvauksia.
+    Kasvien (sekä yleisten, että omien) hakeminen suomenkielisillä ja tieteellisillä nimillä
+    Käyttäjän kirjautuminen
     Kasvin lisääminen omiin kasveihin
-    Omien kasvien tietojen muuttaminen ja poistaminen
+    Omien kasvien selailu sekä tietojen muuttaminen ja poistaminen
+    Päiväkirjamerkintöjen lisääminen omiin kasveihin liittyen
+    Päiväkirjamerkintöjen selaus, muokkaus ja poisto
