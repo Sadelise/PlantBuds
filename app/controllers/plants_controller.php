@@ -74,7 +74,7 @@ class PlantController extends BaseController {
         $errors = $plant->errors();
 
         if (count($errors) > 0) {
-            View::make('plant/edit_plant.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('plant/edit_plant.html', array('errors' => $errors, 'plant' => $attributes));
         } else {
             $plant->update();
             Writer::add($id);
