@@ -17,9 +17,9 @@ Linkit eri sivuille:
 * [Omien kasvien listaus, vaatii kirjautumisen](https://sharhio.users.cs.helsinki.fi/PlantBuds/list_o)
 * [Oman kasvin esittelysivu, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/care/5)
 * [Oman kasvin muokkaussivu, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/edit_o/5)
-* [Päiväkirjamerkintöjen listaus](http://sharhio.users.cs.helsinki.fi/PlantBuds/diarylist/5)
-* [Päiväkirjamerkinnän sivu](http://sharhio.users.cs.helsinki.fi/PlantBuds/diarypost/2/5)
-* [Päiväkirjamerkinnän editointi](http://sharhio.users.cs.helsinki.fi/PlantBuds/edit_diary/2)
+* [Päiväkirjamerkintöjen listaus, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/diarylist/5)
+* [Päiväkirjamerkinnän sivu, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/diarypost/2/5)
+* [Päiväkirjamerkinnän editointi, vaatii kirjautumisen](http://sharhio.users.cs.helsinki.fi/PlantBuds/edit_diary/2)
 * [Kirjautumissivu](https://sharhio.users.cs.helsinki.fi/PlantBuds/login)
 
 ## Työn aihe
