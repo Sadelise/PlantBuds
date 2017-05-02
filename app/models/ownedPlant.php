@@ -10,11 +10,15 @@ class OwnedPlant extends BaseModel {
     }
 
     public static function all($options) {
-        $query_string = 'SELECT *, to_char(acquisition, \'DD.MM.YYYY\') AS acquisition, to_char(added, \'DD.MM.YYYY\') AS added FROM Plant LEFT JOIN Owned_Plant ON Plant.id = Owned_Plant.plant_id WHERE Owned_Plant.grower_id = :grower_id';
-        $loptions['grower_id'] = $options['grower_id'];
-        if (isset($options['search'])) {
-            $query_string .= ' AND LOWER(Plant.tradename) LIKE LOWER(:like)';
-            $query_string .= ' AND LOWER(Plant.latin_name) LIKE LOWER(:like)';
+        $query_string = 'SELECT *, to_char(acquisition, \'DD.MM.YYYY\') AS acquisition, to_char(added, \'DD.MM.YYYY\') AS added '
+                . 'FROM Plant LEFT JOIN Owned_Plant '
+                . 'ON Plant.id = Owned_Plant.plant_id '
+                . 'WHERE Owned_Plant.grower_id = :grower_id';
+        $loptions = array();
+        $loptions['grower_id'] = $_SESSION['user'];
+        if (isset($options['search']) && $options['search'] != '') {
+            $query_string .= ' AND LOWER(Plant.tradename) LIKE LOWER(:like) '
+                    . 'OR LOWER(Plant.latin_name) LIKE LOWER(:like)';
             $loptions['like'] = '%' . $options['search'] . '%';
         }
 
