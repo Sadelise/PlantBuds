@@ -85,6 +85,7 @@ class PlantController extends BaseController {
 
     public static function destroy($id) {
         self::check_logged_in();
+
         $plant = new Plant(array('id' => $id));
         $plant->destroy();
         Redirect::to('/list_p', array('message' => 'Kasvi on poistettu onnistuneesti!'));

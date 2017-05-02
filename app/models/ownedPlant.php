@@ -14,6 +14,7 @@ class OwnedPlant extends BaseModel {
         $loptions['grower_id'] = $options['grower_id'];
         if (isset($options['search'])) {
             $query_string .= ' AND LOWER(Plant.tradename) LIKE LOWER(:like)';
+            $query_string .= ' AND LOWER(Plant.latin_name) LIKE LOWER(:like)';
             $loptions['like'] = '%' . $options['search'] . '%';
         }
 

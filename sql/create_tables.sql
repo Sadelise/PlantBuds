@@ -23,7 +23,7 @@ CREATE TABLE Writer(
 CREATE TABLE Owned_Plant(
   id SERIAL PRIMARY KEY,
   grower_id INTEGER REFERENCES Grower(id) ON DELETE CASCADE, 
-  plant_id INTEGER REFERENCES Plant(id) ON DELETE CASCADE,
+  plant_id INTEGER REFERENCES Plant(id) ON DELETE CASCADE, 
   acquisition date,
   status varchar NOT NULL,
   location varchar NOT NULL,
